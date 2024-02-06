@@ -4,8 +4,6 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
 
-DEPENDENCIES = ['sensor']
-
 my_component_ns = cg.esphome_ns.namespace('my_component1')
 MyComponent = my_component_ns.class_('MyComponent', cg.Component)
 
