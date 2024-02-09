@@ -31,8 +31,8 @@ namespace my_component1 {
         {
             // This will be called very often after setup time
             // Think of it as the `loop()` call in Arduino
-            delay(1000)
-                ESP_LOGD("custom", _level);
+            delay(1000);
+            ESP_LOGD("custom", _level);
         }
         void set_iaq_accuracy(uint8_t level)
         {
