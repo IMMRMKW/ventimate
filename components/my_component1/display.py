@@ -18,21 +18,14 @@ CONFIG_SCHEMA = cv.All(
     display.FULL_DISPLAY_SCHEMA.extend(
         {
             cv.GenerateID(): cv.declare_id(MyComponent),
+            cv.GenerateID(): cv.declare_id(MyComponent),
+            cv.Required(CONF_DC_PIN): pins.gpio_output_pin_schema,
             
         }
     )
     .extend(cv.polling_component_schema("5s")),
     cv.has_at_most_one_key(CONF_PAGES, CONF_LAMBDA),
     cv.only_with_arduino,
-    ssd1331_base.SSD1331_SCHEMA.extend(
-        {
-            cv.GenerateID(): cv.declare_id(MyComponent),
-            cv.Required(CONF_DC_PIN): pins.gpio_output_pin_schema,
-        }
-    )
-    .extend(cv.COMPONENT_SCHEMA)
-    .extend(spi.spi_device_schema()),
-    cv.has_at_most_one_key(CONF_PAGES, CONF_LAMBDA),
 )
 
 
