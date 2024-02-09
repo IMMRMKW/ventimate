@@ -21,10 +21,18 @@ namespace my_component1 {
     class MyComponent : public Component {
     public:
         uint8_t _level = 0;
-        void setup() override
+        // esphome::api::LambdaAction my_variable_setter;
+        // float iaq_accuracy = 0.0;
+
+        void
+        setup() override
         {
-            // This will be called once to set up the component
-            // Think of it as the `setup()` call in Arduino
+            // my_variable_setter = esphome::api::LambdaAction(this {
+            //     iaq_accuracy = value;
+            // });
+            // this->add_action(my_variable_setter);
+            //  This will be called once to set up the component
+            //  Think of it as the `setup()` call in Arduino
         }
 
         void loop() override

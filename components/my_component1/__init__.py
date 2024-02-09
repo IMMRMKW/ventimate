@@ -15,7 +15,7 @@ CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(MyComponent),
     cv.Required('iaq_accuracy'): cv.templatable(cv.float_),
 
-})
+}).extend(cv.polling_component_schema("1s"))
 
 async def to_code(config):
   var = cg.new_Pvariable(config[CONF_ID])
