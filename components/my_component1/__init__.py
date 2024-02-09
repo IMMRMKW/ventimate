@@ -12,12 +12,12 @@ AUTO_LOAD = ["ssd1331_spi"]
 DEPENDENCIES = ["spi"]
 
 ssd1331_spi = cg.esphome_ns.namespace("my_component1")
-SPISSD1331 = ssd1331_spi.class_("MyComponent", ssd1331_base.SSD1331, spi.SPIDevice)
+MyComponent = ssd1331_spi.class_("MyComponent", ssd1331_base.SSD1331, spi.SPIDevice)
 
 CONFIG_SCHEMA = cv.All(
     ssd1331_base.SSD1331_SCHEMA.extend(
         {
-            cv.GenerateID(): cv.declare_id(my_component1),
+            cv.GenerateID(): cv.declare_id(MyComponent),
             cv.Required(CONF_DC_PIN): pins.gpio_output_pin_schema,
         }
     )
