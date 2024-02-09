@@ -17,7 +17,7 @@ import esphome.codegen as cg
 #include "esphome/core/log.h"
 #include <Arduino.h>
 
-#include "esphome/components/ssd1331_base/ssd1331_base.h"
+#include "../ssd1331_base/ssd1331_base.h"
 
     namespace esphome{
         namespace my_component1{
