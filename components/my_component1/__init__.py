@@ -19,5 +19,5 @@ CONFIG_SCHEMA = cv.Schema({
 
 def to_code(config):
   var = cg.new_Pvariable(config[CONF_ID])
-  cg.add(var.set_update_interval(config['update_interval']))
+  
   cg.add(var.set_iaq_accuracy(config['iaq_accuracy']))
