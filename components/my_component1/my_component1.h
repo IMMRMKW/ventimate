@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "esphome/components/ssd1331_spi/ssd1331_spi.h"
+#include "esphome/components/ssd1331_base/ssd1331_base.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
@@ -19,7 +19,7 @@
 namespace esphome {
 namespace my_component1 {
 
-    class MyComponent : public ssd1331_spi::SPISSD1331,
+    class MyComponent : public ssd1331_base::SPISSD1331,
                         public spi::SPIDevice<spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING,
                             spi::DATA_RATE_8MHZ> {
     public:
