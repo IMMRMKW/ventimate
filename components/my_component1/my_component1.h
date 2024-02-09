@@ -37,15 +37,22 @@ namespace my_component1 {
 
         void loop() override
         {
-            // This will be called very often after setup time
-            // Think of it as the `loop()` call in Arduino
-            delay(10);
-            ESP_LOGD("custom", "The value of sensor is: %f", _level);
+            const int32_t now = millis();
+            this->last_update_ = now;
+            if (now - this->last_update_ > this->update_interval_) {
+                ESP_LOGD("custom", "The value of sensor is: %f", _level);
+            }
         }
         void set_iaq_accuracy(uint8_t level)
         {
             _level = level;
         }
+
+        void set_update_interval(uint32_t val) { update_interval_ = val; };
+
+    protected:
+        uint32_t update_interval_ { 0 };
+        uint32_t last_update_ { 0 };
     };
 
 #endif // MY_CUSTOM_COMPONENT_H
