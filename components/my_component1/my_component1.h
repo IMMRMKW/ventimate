@@ -10,26 +10,28 @@
 
 #pragma once
 
-#include "esphome/components/ssd1331_base/ssd1331_base.h"
+import esphome.codegen as cg
+
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
 #include <Arduino.h>
 
-namespace esphome {
-namespace my_component1 {
+#include "esphome/components/ssd1331_base/ssd1331_base.h"
 
-    class MyComponent : public ssd1331_base::SPISSD1331,
-                        public spi::SPIDevice<spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING,
-                            spi::DATA_RATE_8MHZ> {
-    public:
-        // esphome::api::LambdaAction my_variable_setter;
-        // float iaq_accuracy = 0.0;
+    namespace esphome{
+        namespace my_component1{
 
-        void setup() override;
+            class MyComponent: public ssd1331_base::SPISSD1331, public spi::SPIDevice <spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING, spi::DATA_RATE_8MHZ>{
+                public :
+                // esphome::api::LambdaAction my_variable_setter;
+                // float iaq_accuracy = 0.0;
 
-    protected:
-    };
+                void setup() override;
+
+protected:
+}
+;
 
 #endif // MY_CUSTOM_COMPONENT_H
 } // namespace fusb302
