@@ -15,8 +15,8 @@
 #include "esphome/core/log.h"
 #include <Arduino.h>
 
-// #include "ssd1331_spi.h"
 #include "esphome/components/spi/spi.h"
+#include "esphome/components/ssd1331_spi/ssd1331_spi.h"
 
 namespace esphome {
 namespace my_component1 {
