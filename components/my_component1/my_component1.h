@@ -5,9 +5,6 @@
  * Authors: groothuisss & IMMRMKW
  */
 
-#ifndef MY_CUSTOM_COMPONENT_H
-#define MY_CUSTOM_COMPONENT_H
-
 #pragma once
 
 #include "esphome/core/component.h"
@@ -15,6 +12,7 @@
 #include "esphome/core/log.h"
 #include <Arduino.h>
 
+#include "esphome/components/display/display.h"
 #include "esphome/components/spi/spi.h"
 #include "esphome/components/ssd1331_base/ssd1331_spi.h"
 
@@ -33,4 +31,3 @@ namespace my_component1 {
 
 } // namespace fusb302
 } // namespace esphome
-#endif // MY_CUSTOM_COMPONENT_H
