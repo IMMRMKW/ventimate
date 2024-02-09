@@ -8,7 +8,7 @@ from esphome.const import CONF_DC_PIN, CONF_ID, CONF_LAMBDA, CONF_PAGES
 CODEOWNERS = ["@kbx81"]
 
 #AUTO_LOAD = ["ssd1331_base"]
-#AUTO_LOAD = ["ssd1331_spi"]
+AUTO_LOAD = ["ssd1331_spi"]
 DEPENDENCIES = ["spi"]
 
 ssd1331_spi = cg.esphome_ns.namespace("my_component1")
