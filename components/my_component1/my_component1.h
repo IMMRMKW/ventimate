@@ -19,7 +19,7 @@
 namespace esphome {
 namespace my_component1 {
 
-    class MyComponent : public ssd1331_base::SPISSD1331, public spi::SPIDevice<spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING, spi::DATA_RATE_8MHZ> {
+    class MyComponent : public ssd1331_spi::SPISSD1331, public spi::SPIDevice<spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING, spi::DATA_RATE_8MHZ> {
     public:
         // esphome::api::LambdaAction my_variable_setter;
         // float iaq_accuracy = 0.0;
