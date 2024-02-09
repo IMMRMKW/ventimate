@@ -18,3 +18,5 @@ namespace my_component1 {
         delay(500); // NOLINT
         SSD1331::setup();
     }
+}
+}
