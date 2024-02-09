@@ -16,7 +16,7 @@ SPISSD1331 = ssd1331_spi.class_("MyComponent", ssd1331_base.SSD1331, spi.SPIDevi
 CONFIG_SCHEMA = cv.All(
     ssd1331_base.SSD1331_SCHEMA.extend(
         {
-            cv.GenerateID(): cv.declare_id(MyComponent),
+            cv.GenerateID(): cv.declare_id(my_component1),
             cv.Required(CONF_DC_PIN): pins.gpio_output_pin_schema,
         }
     )
