@@ -10,8 +10,6 @@
 
 #pragma once
 
-import esphome.codegen as cg
-
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
@@ -19,20 +17,19 @@ import esphome.codegen as cg
 
 #include "../ssd1331_base/ssd1331_base.h"
 
-    namespace esphome{
-        namespace my_component1{
+namespace esphome {
+namespace my_component1 {
 
-            class MyComponent: public ssd1331_base::SPISSD1331, public spi::SPIDevice <spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING, spi::DATA_RATE_8MHZ>{
-                public :
-                // esphome::api::LambdaAction my_variable_setter;
-                // float iaq_accuracy = 0.0;
+    class MyComponent : public ssd1331_base::SPISSD1331, public spi::SPIDevice<spi::BIT_ORDER_MSB_FIRST, spi::CLOCK_POLARITY_HIGH, spi::CLOCK_PHASE_TRAILING, spi::DATA_RATE_8MHZ> {
+    public:
+        // esphome::api::LambdaAction my_variable_setter;
+        // float iaq_accuracy = 0.0;
 
-                void setup() override;
+        void setup() override;
 
-protected:
-}
-;
+    protected:
+    };
 
-#endif // MY_CUSTOM_COMPONENT_H
 } // namespace fusb302
 } // namespace esphome
+#endif // MY_CUSTOM_COMPONENT_H
