@@ -19,7 +19,7 @@ CONFIG_SCHEMA = cv.Schema({
 
 })
 
-def to_code(config):
+async def to_code(config):
   var = cg.new_Pvariable(config[CONF_ID])
   await cg.register_component(var, config)
   cg.add(var.set_iaq_accuracy(config['iaq_accuracy']))
