@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "esphome/components/ssd1331_base/ssd1331_spi.h"
+#include "esphome/components/ssd1331_spi/ssd1331_spi.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
