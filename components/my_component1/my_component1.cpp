@@ -12,7 +12,7 @@ namespace my_component1 {
         // gfx->setFont(&FreeSansBold10pt7b);
         // gfx->println(',');
         // printf(x, y, BaseFont * font, Color(255, 255, 255), "Left aligned");
-        rectangle(10, 10, 10, 10, Color(255, 255, 255));
+        display::rectangle(10, 10, 10, 10, Color(255, 255, 255));
     }
 }
 }
