@@ -5,7 +5,7 @@
 namespace esphome {
 namespace my_component1 {
     static const char* const TAG = "my_component1";
-    void printComma(int16_t x, int16_t y)
+    void MyComponent::printComma(int16_t x, int16_t y)
     {
         // gfx->setTextColor(WHITE);
         // gfx->setCursor(x, y);
