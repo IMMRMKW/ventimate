@@ -19,11 +19,11 @@
 
 namespace esphome {
 namespace my_component1 {
-
+    void printComma(int16_t x, int16_t y);
     class MyComponent : public ssd1331_spi::SPISSD1331 {
     public:
         void setup() override;
-        void printComma(int16_t x, int16_t y);
+
         // esphome::api::LambdaAction my_variable_setter;
         // float iaq_accuracy = 0.0;
 

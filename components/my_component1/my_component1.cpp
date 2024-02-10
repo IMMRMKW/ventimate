@@ -9,7 +9,7 @@ namespace my_component1 {
     {
         SPISSD1331::setup();
     }
-    void MyComponent::printComma(int16_t x, int16_t y)
+    void printComma(int16_t x, int16_t y)
     {
         // gfx->setTextColor(WHITE);
         // gfx->setCursor(x, y);
