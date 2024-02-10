@@ -5,6 +5,10 @@
 namespace esphome {
 namespace my_component1 {
     static const char* const TAG = "my_component1";
+    void MyComponent::setup()
+    {
+        SPISSD1331::setup();
+    }
     void MyComponent::printComma(int16_t x, int16_t y)
     {
         // gfx->setTextColor(WHITE);

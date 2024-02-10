@@ -11,8 +11,8 @@ AUTO_LOAD = ["ssd1331_base", "ssd1331_spi"]
 
 DEPENDENCIES = ["spi"]
 
-ssd1331_spi = cg.esphome_ns.namespace("my_component1")
-MyComponent = ssd1331_spi.class_("MyComponent", ssd1331_base.SSD1331, spi.SPIDevice)
+my_component1 = cg.esphome_ns.namespace("my_component1")
+MyComponent = my_component1.class_("MyComponent", ssd1331_base.SSD1331, spi.SPIDevice)
 
 CONFIG_SCHEMA = cv.All(
     ssd1331_base.SSD1331_SCHEMA.extend(
