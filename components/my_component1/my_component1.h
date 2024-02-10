@@ -12,6 +12,7 @@
 #include "esphome/core/log.h"
 #include <Arduino.h>
 
+// #include "Arduino_GFX_Library.h"
 #include "esphome/components/display/display.h"
 #include "esphome/components/spi/spi.h"
 #include "esphome/components/ssd1331_spi/ssd1331_spi.h"

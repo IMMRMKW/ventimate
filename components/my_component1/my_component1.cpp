@@ -7,10 +7,12 @@ namespace my_component1 {
     static const char* const TAG = "my_component1";
     void printComma(int16_t x, int16_t y)
     {
-        gfx->setTextColor(WHITE);
-        gfx->setCursor(x, y);
-        gfx->setFont(&FreeSansBold10pt7b);
-        gfx->println(',');
+        // gfx->setTextColor(WHITE);
+        // gfx->setCursor(x, y);
+        // gfx->setFont(&FreeSansBold10pt7b);
+        // gfx->println(',');
+        // printf(x, y, BaseFont * font, Color(255, 255, 255), "Left aligned");
+        rectangle(10, 10, 10, 10, Color(255, 255, 255));
     }
 }
 }
