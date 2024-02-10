@@ -21,6 +21,7 @@ namespace my_component1 {
 
     class MyComponent : public ssd1331_spi::SPISSD1331 {
     public:
+        void printTemp(int16_t x, int16_t y, float temp);
         // esphome::api::LambdaAction my_variable_setter;
         // float iaq_accuracy = 0.0;
 
