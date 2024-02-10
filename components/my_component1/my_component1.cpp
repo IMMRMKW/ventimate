@@ -7,6 +7,7 @@ namespace my_component1 {
     static const char* const TAG = "my_component1";
     void MyComponent::setup()
     {
+        ESP_LOGCONFIG(TAG, "seriously?:");
         SPISSD1331::setup();
         printComma(1, 1);
     }
