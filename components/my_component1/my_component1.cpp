@@ -22,3 +22,4 @@ namespace my_component1 {
         Display::rectangle(10, 10, 10, 10, Color(255, 255, 255));
     }
 }
+}
