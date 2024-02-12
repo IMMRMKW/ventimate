@@ -9,7 +9,8 @@ namespace my_component1 {
     {
         ESP_LOGCONFIG(TAG, "seriously?:");
         SPISSD1331::setup();
-        printComma(1, 1);
+        pinMode(27, OUTPUT);
+        digitalWrite(27, HIGH);
     }
     void MyComponent::printComma(int16_t x, int16_t y)
     {
@@ -20,5 +21,4 @@ namespace my_component1 {
         // printf(x, y, BaseFont * font, Color(255, 255, 255), "Left aligned");
         Display::rectangle(10, 10, 10, 10, Color(255, 255, 255));
     }
-}
 }
