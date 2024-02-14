@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import CONF_ID, UNIT_EMPTY, ICON_EMPTY
+from esphome.const import CONF_ID,  CONF_SENSOR
 
 calibrated_CO2_ns = cg.esphome_ns.namespace('calibrated_CO2')
 
