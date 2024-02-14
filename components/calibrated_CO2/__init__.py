@@ -9,6 +9,7 @@ EmptySensor = empty_sensor_ns.class_('CALIBRATEDCO2', cg.PollingComponent)
 
 CONFIG_SCHEMA = sensor.sensor_schema(UNIT_EMPTY, ICON_EMPTY, 1).extend({
     cv.GenerateID(): cv.declare_id(EmptySensor)
+    cv.Optional(CONF_SENSOR): cv.use_id(sensor.Sensor),
 }).extend(cv.polling_component_schema('60s'))
 
 def to_code(config):
