@@ -8,7 +8,7 @@ calibrated_CO2_ns = cg.esphome_ns.namespace('calibrated_CO2')
 CALIBRATEDCO2 = calibrated_CO2_ns.class_('CALIBRATEDCO2', cg.PollingComponent)
 
 CONFIG_SCHEMA = sensor.sensor_schema(UNIT_EMPTY, ICON_EMPTY, 1).extend({
-    cv.GenerateID(): cv.declare_id(CALIBRATEDCO2)
+    cv.GenerateID(): cv.declare_id(CALIBRATEDCO2),
     cv.Optional(CONF_SENSOR): cv.use_id(sensor.Sensor),
 }).extend(cv.polling_component_schema('60s'))
 
