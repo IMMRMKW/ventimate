@@ -12,12 +12,12 @@ namespace empty_sensor {
 
     void CALIBRATEDCO2::loop()
     {
-        this->update();
+        update();
     }
 
     void CALIBRATEDCO2::update()
     {
-        this->publish_state(4);
+        publish_state(4);
     }
 
     void CALIBRATEDCO2::dump_config()
