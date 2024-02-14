@@ -2,7 +2,7 @@
 #include "esphome/core/log.h"
 
 namespace esphome {
-namespace empty_sensor {
+namespace calibrated_CO2 {
 
     static const char* TAG = "calibrated_CO2";
 
