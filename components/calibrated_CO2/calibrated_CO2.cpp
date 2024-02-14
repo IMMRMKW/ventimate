@@ -1,4 +1,4 @@
-#include "empty_sensor.h"
+#include "calibrated_CO2.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
