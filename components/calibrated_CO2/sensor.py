@@ -16,6 +16,5 @@ CONFIG_SCHEMA = cv.Schema(
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     yield cg.register_component(var, config)
-    yield sensor.register_sensor(var, config)
     sens = yield cg.get_variable(config[CONF_SENSOR])
     cg.add(var.set_sensor(sens))
