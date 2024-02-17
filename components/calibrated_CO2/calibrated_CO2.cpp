@@ -18,6 +18,7 @@ namespace calibrated_CO2 {
 
     void CALIBRATEDCO2::update()
     {
+        _outDoorCO2 = getCalibrationValue();
         publish_state(_outDoorCO2);
     }
 
