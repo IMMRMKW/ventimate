@@ -13,7 +13,7 @@ namespace calibrated_CO2 {
 
     void CALIBRATEDCO2::loop()
     {
-        update();
+        // update();
     }
 
     void CALIBRATEDCO2::update()
@@ -44,6 +44,8 @@ namespace calibrated_CO2 {
             } else {
                 return 420;
             }
+        } else {
+            return 420;
         }
     }
 

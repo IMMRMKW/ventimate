@@ -12,7 +12,7 @@ CONFIG_SCHEMA = cv.Schema(
 {
     cv.GenerateID(): cv.declare_id(CALIBRATEDCO2),
     cv.Optional(CONF_SENSOR): cv.use_id(sensor.Sensor),
-}).extend(cv.polling_component_schema('60s'))
+}).extend(cv.polling_component_schema('5s'))
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
