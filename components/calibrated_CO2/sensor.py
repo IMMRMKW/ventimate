@@ -2,9 +2,10 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
 from esphome.const import CONF_ID,  CONF_SENSOR
+from esphome.core import Lambda, CORE
 
 DEPENDENCIES = ["network"]
-AUTO_LOAD = ["HTTPClient"]
+
 calibrated_CO2_ns = cg.esphome_ns.namespace('calibrated_CO2')
 
 CALIBRATEDCO2 = calibrated_CO2_ns.class_('CALIBRATEDCO2', cg.PollingComponent)
@@ -20,3 +21,5 @@ def to_code(config):
     yield cg.register_component(var, config)
     sens = yield cg.get_variable(config[CONF_SENSOR])
     cg.add(var.set_sensor(sens))
+    if CORE.is_esp32:
+        cg.add_library("HTTPClient", None)
