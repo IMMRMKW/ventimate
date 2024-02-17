@@ -1,7 +1,7 @@
 #pragma once
-
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/core/component.h"
+#include <HTTPClient.h>
 
 namespace esphome {
 namespace calibrated_CO2 {
@@ -13,6 +13,10 @@ namespace calibrated_CO2 {
         void update() override;
         void set_sensor(sensor::Sensor* sensor) { sensor_ = sensor; }
         void dump_config() override;
+
+    private:
+        float getCalibrationValue();
+        _outDoorCO2 = 0;
 
     protected:
         sensor::Sensor* sensor_ { nullptr };
