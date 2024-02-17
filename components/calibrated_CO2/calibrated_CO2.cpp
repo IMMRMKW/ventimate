@@ -8,7 +8,7 @@ namespace calibrated_CO2 {
 
     void CALIBRATEDCO2::setup()
     {
-        _outDoorCO2 = getCalibrationValue();
+        //_outDoorCO2 = getCalibrationValue();
     }
 
     void CALIBRATEDCO2::loop()
