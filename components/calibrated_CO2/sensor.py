@@ -4,7 +4,7 @@ from esphome.components import sensor
 from esphome.const import CONF_ID,  CONF_SENSOR
 
 DEPENDENCIES = ["network"]
-AUTO_LOAD = ["httpclient"]
+AUTO_LOAD = ["network"]
 calibrated_CO2_ns = cg.esphome_ns.namespace('calibrated_CO2')
 
 CALIBRATEDCO2 = calibrated_CO2_ns.class_('CALIBRATEDCO2', cg.PollingComponent)
