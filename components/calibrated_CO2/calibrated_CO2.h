@@ -16,7 +16,7 @@ namespace calibrated_CO2 {
 
     private:
         float getCalibrationValue();
-        _outDoorCO2 = 0;
+        float _outDoorCO2 = 0;
 
     protected:
         sensor::Sensor* sensor_ { nullptr };

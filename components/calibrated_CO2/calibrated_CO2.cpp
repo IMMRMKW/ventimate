@@ -45,6 +45,7 @@ namespace calibrated_CO2 {
                 return 420;
             }
         }
+    }
 
-    } // namespace empty_sensor
+} // namespace empty_sensor
 } // namespace esphome
