@@ -12,6 +12,7 @@ namespace calibrated_CO2 {
         void loop() override;
         void update() override;
         void set_sensor(sensor::Sensor* sensor) { sensor_ = sensor; }
+        void set_co2_sensor(sensor::Sensor* co2_sensor) { co2_sensor_ = co2_sensor; }
         void dump_config() override;
 
     private:
@@ -20,6 +21,7 @@ namespace calibrated_CO2 {
 
     protected:
         sensor::Sensor* sensor_ { nullptr };
+        sensor::Sensor* co2_sensor_ { nullptr };
     };
 
 } // namespace empty_sensor
