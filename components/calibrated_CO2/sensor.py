@@ -4,7 +4,7 @@ from esphome.components import sensor
 from esphome.const import (
     CONF_CO2,
     CONF_ID,  
-    CONF_SENSOR
+    CONF_SENSOR,
     UNIT_PARTS_PER_MILLION
 )
 from esphome.core import Lambda, CORE
