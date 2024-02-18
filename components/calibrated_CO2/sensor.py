@@ -5,7 +5,9 @@ from esphome.const import (
     CONF_CO2,
     CONF_ID,  
     CONF_SENSOR,
-    UNIT_PARTS_PER_MILLION
+    ICON_MOLECULE_CO2,
+    STATE_CLASS_MEASUREMENT,
+    UNIT_PARTS_PER_MILLION,
 )
 from esphome.core import Lambda, CORE
 
