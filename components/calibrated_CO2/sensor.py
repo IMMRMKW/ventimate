@@ -8,9 +8,12 @@ from esphome.const import (
     DEVICE_CLASS_CARBON_DIOXIDE,
     ICON_MOLECULE_CO2,
     STATE_CLASS_MEASUREMENT,
-    UNIT_PARTS_PER_MILLION,
+    UNIT_PARTS_PER_MILLION, 
 )
-from esphome.core import Lambda, CORE
+from esphome.core import CORE
+
+CONF_GET_CO2_ONLINE = 'get_co2_online'
+CONF_DEFAULT_OUTDOOR_CO2 = 'default_outdoor_co2'
 
 calibrated_CO2_ns = cg.esphome_ns.namespace('calibrated_CO2')
 
@@ -20,6 +23,8 @@ CONFIG_SCHEMA = cv.Schema(
 {
     cv.GenerateID(): cv.declare_id(CALIBRATEDCO2),
     cv.Optional(CONF_SENSOR): cv.use_id(sensor.Sensor),
+    cv.Optional(CONF_GET_CO2_ONLINE, default = False): cv.boolean,
+    cv.Optional(CONF_DEFAULT_OUTDOOR_CO2, default = 420): cv.float_range(min = 0.0, max = 1000.0),
     cv.Required(CONF_CO2): sensor.sensor_schema(
                 unit_of_measurement=UNIT_PARTS_PER_MILLION,
                 icon=ICON_MOLECULE_CO2,
@@ -40,3 +45,8 @@ async def to_code(config):
     if CORE.is_esp32:
         cg.add_library("WiFiClientSecure", None)
         cg.add_library("HTTPClient", None)
+    if CONF_GET_CO2_ONLINE in config:
+        cg.add(var.set_Getting_CO2_Online(config[CONF_GET_CO2_ONLINE]))
+    if CONF_DEFAULT_OUTDOOR_CO2 in config:
+        cg.add(var.set_default_outdoor_CO2(config[CONF_DEFAULT_OUTDOOR_CO2]))
+
