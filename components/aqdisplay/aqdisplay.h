@@ -41,10 +41,19 @@
 namespace esphome {
 namespace aqdisplay {
 
+    /**
+     * @enum status
+     * @brief An enum for the state machine of the aqdisplay. It discriminates between a welcome state at startup, and a working state where measurement data is updated and presented continously
+     */
     enum status {
         welcome = 0,
         working
     };
+
+    /**
+     * @enum connectivity
+     * @brief An enum for the state machine of connectivity. It discriminates between none, wifi, and bluetooth
+     */
     enum connectivity {
         none = 0,
         wifi,
@@ -52,6 +61,7 @@ namespace aqdisplay {
     };
 
     static const char* const TAG = "aqdisplay";
+
     class AQDISPLAY : public PollingComponent {
     public:
         void setup() override;

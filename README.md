@@ -12,6 +12,7 @@
 * Change name of MyFan
 	- Think of something!
 * Change name of this project
+* Update gitignore file
 
 ## Inserting fan art (pun intended) in your fan
 Insert explanation of how to include fan art
