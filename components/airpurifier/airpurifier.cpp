@@ -11,6 +11,16 @@ namespace airpurifier {
     void AIRPURIFIER::loop()
     {
     }
+
+    /**
+     * @fn void update()
+     * @brief Updates fan power based on whether the manual/auto setting.
+     * @todo error_Int is based on index, but can simply be I_[index]*diff_time, where I_contains the time constant to reach 100% power
+     * @todo remove prints
+     * @todo more appropriate name for max_power_
+     * @todo add more complete explanation in brief
+     */
+
     void AIRPURIFIER::update()
     {
         Serial.println("Airpurifier update");
@@ -58,6 +68,13 @@ namespace airpurifier {
         sensor_power_->publish_state(sensor_power_->state);
     }
 
+    /**
+     * @fn uint8_t calculate_aqi()
+     * @brief Calculates air quality index based on sensor readouts and previously determined thresholds for each sensor.
+     * @todo Decide if an external aqi is made which serves both the display and the purifier
+     * @todo Create @brief description
+     */
+
     uint8_t AIRPURIFIER::calculate_aqi()
     {
         uint8_t index = 0;
@@ -84,10 +101,23 @@ namespace airpurifier {
         return index;
     }
 
+    /**
+     * @fn void dump_config()
+     * @brief
+     * @todo implement as 0 in header file, override in derived classes
+     */
+
     void AIRPURIFIER::dump_config()
     {
         Serial.println("Number changed");
     }
+
+    /**
+     * @fn uint8_t find_level(uint16_t level, std::array<uint16_t, 5> levels)
+     * @brief Helper function to determine air quality level
+     * @todo complete doxigen documentation
+     * @todo See also determine_aqi documentation
+     */
 
     uint8_t AIRPURIFIER::find_level(uint16_t level, std::array<uint16_t, 5> levels)
     {
@@ -99,9 +129,21 @@ namespace airpurifier {
         return levels.size();
     }
 
+    /**
+     * @fn void set_power(uint8_t power)
+     * @brief Sets fan power
+     * @todo remove from here, implement as zero in header file
+     */
+
     void AIRPURIFIER::set_power(uint8_t power)
     {
     }
+
+    /**
+     * @fn void set_integral_gain(std::array<float, 5> constants)
+     * @brief Sets time constant
+     * @todo name can be changed once controller is changed to have a time constant instead of a strict dt*error*gain
+     */
 
     void AIRPURIFIER::set_integral_gain(std::array<float, 5> constants)
     {
