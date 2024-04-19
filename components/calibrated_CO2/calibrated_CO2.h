@@ -9,6 +9,17 @@
 
 namespace esphome {
 namespace calibrated_CO2 {
+    /**
+     * @class Calibrated_CO2
+     * @brief A class that implements extended calibration functionality by getting the Baseline environment
+     * @todo document all one-liner functions (set/get) and class variables
+     * @todo document all functions in .cpp file
+     * @todo implement dump_config function
+     * @todo waiting time implementation can be deleted. Was to check if powerdelivery was influenced
+     * @todo check if current online database is representative for world wide CO2 levels, or more logical to use other database
+     * @todo Current method of getting online data takes too much time according to ESPHome, look at if alternatives are possible. There is a HTTPRequest Class, maybe use that.
+     * @todo check if calibration method is sensible, or smarter methods are available
+     */
 
     class CALIBRATEDCO2 : public sensor::Sensor, public PollingComponent {
     public:
@@ -38,5 +49,5 @@ namespace calibrated_CO2 {
         bool updated_before_ = false;
     };
 
-} // namespace empty_sensor
+} // namespace calibrated_CO2
 } // namespace esphome

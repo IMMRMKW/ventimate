@@ -8,6 +8,16 @@
 namespace esphome {
 namespace myfan {
 
+    /**
+     * @class MYFAN
+     * @brief A class that extends the airpurifier class. It is the physical implementation of the airpurifier so to say.
+     * @todo document all one-liner functions (set/get) and class variables
+     * @todo Think of new name!
+     * @todo implement dump_config function
+     * @todo remove all print functions
+     * @todo create doxygen documentation for all class functions in .cpp file.
+     */
+
     class MYFAN : public airpurifier::AIRPURIFIER {
     public:
         void setup() override;

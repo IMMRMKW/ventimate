@@ -9,6 +9,13 @@
 namespace esphome {
 namespace airpurifier {
     static const char* const TAG = "airpurifier";
+
+    /**
+     * @class Airpurifier
+     * @brief A class that implements airpufier functions.
+     * @todo document all one-liner functions (set/get) and class variables
+     */
+
     class AIRPURIFIER : public PollingComponent {
     public:
         void setup() override;
@@ -16,9 +23,13 @@ namespace airpurifier {
         void update() override;
 
         void set_sensor_voc(sensor::Sensor* sensor) { sensor_voc_ = sensor; }
+
         void set_sensor_pm_2_5(sensor::Sensor* sensor) { sensor_pm_2_5_ = sensor; }
+
         void set_sensor_pm_10(sensor::Sensor* sensor) { sensor_pm_10_ = sensor; }
+
         void set_sensor_co2(sensor::Sensor* sensor) { sensor_co2_ = sensor; }
+
         void set_sensor_power(sensor::Sensor* sensor) { sensor_power_ = sensor; }
 
         void set_max_power(int8_t max_power) { max_power_ = max_power; }
