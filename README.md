@@ -13,7 +13,13 @@
 	- Think of something!
 * Change name of this project
 * Update gitignore file
+* Create gauge card configuration for all sensor values using the AQI class for color limits and the current sensor values for the current readout.
 
+## Uploading this project to your esp32
+### Via Home Assistant
+### Via your browser
+https://web.esphome.io/
+### Locally via USB
 ## Inserting fan art (pun intended) in your fan
 Insert explanation of how to include fan art
-testing with esphome external components
+

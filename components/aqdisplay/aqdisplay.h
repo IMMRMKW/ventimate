@@ -18,8 +18,10 @@
 #include "esphome/core/gpio.h"
 
 #include "FreeSansBold10pt7b.h"
+#include "FreeSansBold9pt7b.h"
 #include "bitmaps.h"
 
+#define BIG_FONT FreeSansBold9pt7b
 #define MAX_LEVEL 5
 #define LEVEL0 0x04A8
 #define LEVEL1 0x8E27
@@ -62,10 +64,17 @@ namespace aqdisplay {
 
     static const char* const TAG = "aqdisplay";
 
+    /**
+     * @class Aqdisplay
+     * @brief A class for visualizing air quality parameters on a SSD1331 oled screen
+     * Create new font: https://rop.nl/truetype2gfx/
+     * @todo document all one-liner functions (set/get) and class variables
+     */
+
     class AQDISPLAY : public PollingComponent {
     public:
         void setup() override;
-        void loop() override;
+        void loop() override {};
         void update() override;
         void printTemp(int16_t x, int16_t y, float temp);
         void printComma(int16_t x, int16_t y);
@@ -96,13 +105,15 @@ namespace aqdisplay {
         void setPM(uint8_t level);
         void setCO2(uint8_t level);
         void setVOC(uint8_t level);
-        void setTime(ESPTime current_time);
+        void setTime(int16_t x, int16_t y, ESPTime current_time);
         void setConnectivity(uint8_t connect);
-        void setFan(bool show, uint8_t level);
+        void setFan(int16_t x, int16_t y, uint8_t level);
 
     private:
+        InternalGPIOPin* cs_pin_ { nullptr };
+        InternalGPIOPin* dc_pin_ { nullptr };
+        InternalGPIOPin* rst_pin_ { nullptr };
         homeassistant::HomeassistantTime* clock_ { nullptr };
-        wifi::WiFiComponent* network_ { nullptr };
         sensor::Sensor* sensor_co2_ { nullptr };
         sensor::Sensor* sensor_pm_1_0_ { nullptr };
         sensor::Sensor* sensor_pm_2_5_ { nullptr };
@@ -111,6 +122,7 @@ namespace aqdisplay {
         sensor::Sensor* sensor_rh_ { nullptr };
         sensor::Sensor* sensor_temp_ { nullptr };
         sensor::Sensor* sensor_voc_ { nullptr };
+        wifi::WiFiComponent* network_ { nullptr };
 
         std::array<uint16_t, 5> pm_1_0_levels_ = { 0 };
         std::array<uint16_t, 5> pm_2_5_levels_ = { 0 };
@@ -131,22 +143,20 @@ namespace aqdisplay {
         int8_t fan_level = -1;
         float temp_level = 0;
         uint8_t rh_level = 0;
+        uint8_t fan_level_ = 255;
 
+        bool single_digits = false;
         bool connectivity_shown = false;
 
+        int16_t get_width_difference(const char* str1, const char* str2);
+        void fill_textBounds_with_black(const char* str, int16_t x, int16_t y, int16_t* x1, int16_t* y1, uint16_t* w, uint16_t* h);
         void drawGraph();
-        void drawFanSquare();
         void drawRow(uint8_t row, uint8_t new_level, int8_t prev_level);
         void drawLevel(uint8_t level, uint8_t row, bool flag);
 
         uint8_t state_ = welcome;
         uint8_t counter_ = 0;
         bool graph_shown_ = false;
-
-    protected:
-        InternalGPIOPin* cs_pin_ { nullptr };
-        InternalGPIOPin* dc_pin_ { nullptr };
-        InternalGPIOPin* rst_pin_ { nullptr };
     };
 }
 

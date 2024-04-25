@@ -11,14 +11,7 @@ namespace aqdisplay {
         gfx->begin();
         dc_pin_->pin_mode(gpio::FLAG_OUTPUT);
         gfx->fillScreen(GFX_BLACK);
-        // gfx->draw16bitRGBBitmap(0, 0, tchnlgyst_96x19, 96, 19);
-
-        // gfx->fillScreen(GFX_BLACK);
-        // drawGraph();
-    }
-
-    void AQDISPLAY::loop()
-    {
+        gfx->setTextColor(GFX_WHITE);
     }
 
     void AQDISPLAY::update()
@@ -33,14 +26,13 @@ namespace aqdisplay {
             break;
         }
         case working:
-            Serial.println("Display update");
             if (!graph_shown_) {
                 gfx->fillScreen(GFX_BLACK);
                 drawGraph();
                 graph_shown_ = true;
             }
             if (clock_) {
-                setTime(clock_->now());
+                setTime(0, 0, clock_->now());
             }
 
             if (network_) {
@@ -91,7 +83,7 @@ namespace aqdisplay {
                 if (!isnan(temp)) {
                     if (temp != temp_level) {
                         temp_level = temp;
-                        printTemp(0, 23, temp_level);
+                        printTemp(0, 22, temp_level);
                     }
                 }
             }
@@ -102,7 +94,7 @@ namespace aqdisplay {
                     if ((uint8_t)rh != rh_level) {
                         rh_level = (uint8_t)rh;
                         rh_level = rh_level > 99 ? 99 : rh_level;
-                        printRH(52, 23, rh_level);
+                        printRH(57, 22, rh_level);
                     }
                 }
             }
@@ -114,8 +106,13 @@ namespace aqdisplay {
             }
 
             if (sensor_power_) {
-                uint8_t level = (uint8_t)sensor_power_->get_state();
-                setFan(true, level);
+                uint8_t fan_level = (uint8_t)sensor_power_->get_state();
+                if (!isnan(fan_level)) {
+                    if (fan_level != fan_level_) {
+                        fan_level_ = fan_level;
+                        setFan(0, 26, fan_level_);
+                    }
+                }
             }
             break;
 
@@ -127,44 +124,41 @@ namespace aqdisplay {
 
     void AQDISPLAY::printTemp(int16_t x, int16_t y, float temp)
     {
-        gfx->fillRect(x, y - RH_HEIGHT + 1, 3 * RH_WIDTH + 5, RH_HEIGHT, GFX_BLACK);
-        gfx->setTextColor(GFX_WHITE);
-        if (temp < 10) {
-            x = x + RH_WIDTH + 1;
-        }
-        gfx->setTextColor(GFX_WHITE);
-        gfx->setCursor(x, y);
-        gfx->setFont(&FreeSansBold10pt7b);
+        int16_t x_bounds, y_bounds;
+        uint16_t w, h;
+        gfx->setFont(&BIG_FONT);
+        fill_textBounds_with_black("88.8", x, y, &x_bounds, &y_bounds, &w, &h);
 
+        if (temp < 10) {
+            int16_t dw = get_width_difference("88.8", "8.8");
+            x = x + dw;
+        }
+
+        gfx->setCursor(x, y);
         gfx->println(temp, 1);
-        gfx->setCursor(x + 42, y - 6);
+        gfx->setCursor(x_bounds + w + 4, y - 6);
         gfx->setFont();
         gfx->println("C");
-        gfx->drawRect(x + 40, y - 6, 1, 1, GFX_WHITE);
+        gfx->drawRect(x_bounds + w + 2, y - 6, 1, 1, GFX_WHITE);
     }
 
     void AQDISPLAY::printRH(int16_t x, int16_t y, float RH)
     {
-        gfx->fillRect(x, y - RH_HEIGHT + 1, 2 * RH_WIDTH, RH_HEIGHT, GFX_BLACK);
-        gfx->setTextColor(GFX_WHITE);
+        int16_t x_bounds, y_bounds;
+        uint16_t w, h;
+        gfx->setFont(&BIG_FONT);
+        fill_textBounds_with_black("88", x, y, &x_bounds, &y_bounds, &w, &h);
+
         if (RH < 10) {
-            x = x + RH_WIDTH + 1;
+            int16_t dw = get_width_difference("88", "8");
+            x = x + dw;
         }
         gfx->setCursor(x, y);
-        gfx->setFont(&FreeSansBold10pt7b);
 
         gfx->println(RH, 0);
-        gfx->setCursor(x + 25, y - 6);
+        gfx->setCursor(x_bounds + w + 2, y - 6);
         gfx->setFont();
         gfx->println("%RH");
-    }
-
-    void AQDISPLAY::printComma(int16_t x, int16_t y)
-    {
-        gfx->setTextColor(GFX_WHITE);
-        gfx->setCursor(x, y);
-        gfx->setFont(&FreeSansBold10pt7b);
-        gfx->println(',');
     }
 
     void AQDISPLAY::setPM(uint8_t level)
@@ -185,11 +179,13 @@ namespace aqdisplay {
         VOC_level = level;
     }
 
-    void AQDISPLAY::setTime(ESPTime current_time)
+    void AQDISPLAY::setTime(int16_t x, int16_t y, ESPTime current_time)
     {
-        gfx->fillRect(0, 0, 29, 7, GFX_BLACK);
-        gfx->setCursor(0, 0);
+        int16_t x_bounds, y_bounds;
+        uint16_t w, h;
         gfx->setFont();
+        fill_textBounds_with_black("88:88", x, y, &x_bounds, &y_bounds, &w, &h);
+        gfx->setCursor(0, 0);
         char str[6];
         time_t timeStamp = current_time.timestamp;
         strftime(str, sizeof(str), "%H:%M", localtime(&timeStamp));
@@ -214,25 +210,25 @@ namespace aqdisplay {
         }
     }
 
-    void AQDISPLAY::setFan(bool show, uint8_t level)
+    void AQDISPLAY::setFan(int16_t x, int16_t y, uint8_t level)
     {
-        uint8_t x = 0;
-        uint8_t y = 28;
+        int16_t x_bounds, y_bounds;
+        uint16_t w, h;
+        gfx->setFont();
         gfx->setCursor(x, y);
-        gfx->print("Fan: ");
-        gfx->fillRect(x + 22, y, 30, 8, GFX_BLACK);
+        gfx->print("Fan:");
+        x = gfx->getCursorX();
+        fill_textBounds_with_black("888", x, y, &x_bounds, &y_bounds, &w, &h);
+        if (level < 10) {
+            int16_t dw = get_width_difference("888", "8");
+            x = x + dw;
+        } else if (level < 100) {
+            int16_t dw = get_width_difference("888", "88");
+            x = x + dw;
+        }
+        gfx->setCursor(x, y);
         gfx->print(level);
         gfx->print("%");
-
-        //
-        if (show) {
-            // gfx->setCursor(x, 1);
-            // gfx->setFont();
-            // gfx->print("Fan");
-            // gfx->drawBitmap(x, 0, bitmap_fan_10x10, 10, 10, GFX_WHITE);
-            // gfx->drawRect(80, 1, 15, 7, GFX_WHITE);
-            // gfx->fillRect(82, 3, (level * 11) / 10, 3, GFX_WHITE);
-        }
     }
 
     void AQDISPLAY::drawRow(uint8_t row, uint8_t new_level, int8_t prev_level)
@@ -325,6 +321,22 @@ namespace aqdisplay {
             }
         }
         return levels.size();
+    }
+
+    int16_t AQDISPLAY::get_width_difference(const char* str1, const char* str2)
+    {
+        uint16_t w_1, h_1, w_2, h_2;
+        int16_t x_1, y_1;
+        gfx->getTextBounds(str1, 0, 0, &x_1, &y_1, &w_1, &h_1);
+        gfx->getTextBounds(str2, 0, 0, &x_1, &y_1, &w_2, &h_2);
+        return (int16_t)w_1 - w_2;
+    }
+
+    void AQDISPLAY::fill_textBounds_with_black(const char* str, int16_t x, int16_t y,
+        int16_t* x1, int16_t* y1, uint16_t* w, uint16_t* h)
+    {
+        gfx->getTextBounds(str, x, y, x1, y1, w, h);
+        gfx->fillRect(*x1, *y1, *w, *h, GFX_BLACK);
     }
 }
 }
