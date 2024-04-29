@@ -16,6 +16,30 @@
 * Create gauge card configuration for all sensor values using the AQI class for color limits and the current sensor values for the current readout.
 
 ## Uploading this project to your esp32
+### Manually, using, e.g., VSCode
+* Create a project folder in VSCode to which you clone this github project.
+* Next, using the terminal, create a virtual environment in this folder:
+```bash
+python -m venv .venv
+```
+* Activate your virtual environment using:
+``` bash
+ .\.venv\Scripts\activate
+```
+* First, install wheel:
+``` bash
+pip install wheel 
+```
+* Next, install esphome:
+``` bash
+pip install esphome 
+```
+*You can upload the code using:
+``` bash
+esphome run config.yml --device COM1
+```
+Where the '1' behind 'COM' should be replaced by the actual COM port number of your device.
+
 ### Via Home Assistant
 ### Via your browser
 https://web.esphome.io/
