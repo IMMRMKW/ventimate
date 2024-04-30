@@ -69,6 +69,7 @@ namespace aqdisplay {
      * @brief A class for visualizing air quality parameters on a SSD1331 oled screen
      * Create new font: https://rop.nl/truetype2gfx/
      * @todo document all one-liner functions (set/get) and class variables
+     * @todo ensure that component also extends SPI component
      */
 
     class AQDISPLAY : public PollingComponent {

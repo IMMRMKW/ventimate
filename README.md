@@ -15,6 +15,12 @@
 * Update gitignore file
 * Create gauge card configuration for all sensor values using the AQI class for color limits and the current sensor values for the current readout.
 
+## Aquality index
+There are loads of different air quality indexes (see, [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index#)
+[this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8876806/) has a measure for safe levels of VOCs.
+
+
+
 ## Uploading this project to your esp32
 ### Manually, using, e.g., VSCode
 * Create a project folder in VSCode to which you clone this github project.
@@ -34,7 +40,7 @@ pip install wheel
 ``` bash
 pip install esphome 
 ```
-*You can upload the code using:
+* You can upload the code using:
 ``` bash
 esphome run config.yml --device COM1
 ```

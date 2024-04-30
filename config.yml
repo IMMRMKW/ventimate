@@ -37,22 +37,7 @@ wifi:
 
 captive_portal:
 
-substitutions:
-  pm_2_5_substitution: '[12, 35, 55, 150, 250]'
-# globals:
 
-  # - id: pm_2_5_levels_EPA
-  #   type: int[5]
-  #   initial_value: '[12, 35, 55, 150, 250]'
-  # - id: pm_10_levels_EPA
-  #   type: int[5]
-  #   initial_value: '[54, 154, 254, 354, 424]'
-  # - id: voc_levels_EPA
-  #   type: int[5]
-  #   initial_value: '[15, 25, 50, 75, 100]'
-  # - id: co2_levels_EPA
-  #   type: int[5]
-  #   initial_value: '[650, 1500, 2000, 2500, 5000]'
 
 
 
@@ -74,32 +59,6 @@ external_components:
  #     ref: main
  #   components: [ my_component1, calibrated_CO2 ] 
  #   refresh: 10s
-
-#display:
-#  - platform: my_component1
-#    reset_pin: GPIO04
-#    cs_pin: GPIO05
-#    dc_pin: GPIO19 
-#    lambda: |-
-#      it.esphome::display::ssd1331_spi::my_component1::printComma(47, 30);
-
-
-
-#display:
-#  - platform: ssd1331_spi
-#    reset_pin: GPIO04
-#    cs_pin: GPIO05
-#    dc_pin: GPIO19    
-
-#font:
-#  - file: gfonts://Inter
-#    id: font1
-#    size: 9
-#
-#  - file: gfonts://Ysabeau # Kanit # Inter
-#    id: font2
-#    size: 28
-  
 
 fusb302:
   setup_priority: 900
@@ -197,6 +156,7 @@ aqdisplay:
 
 
 
+
 airpurifier:
 - platform: myfan
   id: fancyfan
@@ -254,6 +214,21 @@ switch:
   #  sensor_pm_10: pmsx003_pm10
 
 sensor:
+  - platform: aqi
+    id: air_quality_index
+    sensor_pm_1_0: pmsx003_pm01
+    sensor_pm_2_5: pmsx003_pm25
+    sensor_pm_10: pmsx003_pm10
+    sensor_voc: bvoc
+    co2_index:
+      name: "CO2 index"
+      id: co2_index
+    pm_index:
+      name: "PM index"
+      id: pm_index
+    voc_index:
+      name: "VOC index"
+      id: voc_index
   #- platform: calibrated_CO2
   #  sensor: scd4x_co2
   #  default_outdoor_co2: 425

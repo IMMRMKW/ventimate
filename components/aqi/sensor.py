@@ -8,7 +8,7 @@ from esphome.const import (
     DEVICE_CLASS_CARBON_DIOXIDE,
     ICON_MOLECULE_CO2,
     STATE_CLASS_MEASUREMENT,
-    UNIT_PARTS_PER_MILLION, 
+    UNIT_EMPTY,
 )
 from esphome.core import CORE
 
@@ -36,13 +36,26 @@ AQI = aqi_ns.class_('AQI', cg.PollingComponent)
 CONFIG_SCHEMA = cv.Schema(
 {
     cv.GenerateID(): cv.declare_id(AQI),
-    cv.Optional(CONF_CO2_INDEX): cv.use_id(sensor.Sensor),
-    cv.Optional(CONF_PM_INDEX): cv.use_id(sensor.Sensor),
+    cv.Required(CONF_CO2_INDEX): sensor.sensor_schema(
+                unit_of_measurement=UNIT_EMPTY,
+                icon=ICON_MOLECULE_CO2,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_CARBON_DIOXIDE,
+                state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    cv.Required(CONF_PM_INDEX): sensor.sensor_schema(
+                unit_of_measurement=UNIT_EMPTY,
+                icon=ICON_CHEMICAL_WEAPON,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_CARBON_DIOXIDE,
+                state_class=STATE_CLASS_MEASUREMENT,
+    ),
     cv.Optional(CONF_VOC_INDEX): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_CO2): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_PM_1_0): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_PM_2_5): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_PM_10): cv.use_id(sensor.Sensor),
+    cv.Optional(CONF_SENSOR_VOC): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_CO2_LEVELS, default = [650, 1500, 2000, 2500, 5000]) : cv.ensure_list(cv.int_),
     cv.Optional(CONF_PM_1_0_LEVELS, default = [12, 35, 55, 150, 250]) : cv.ensure_list(cv.int_),
     cv.Optional(CONF_PM_2_5_LEVELS, default = [12, 35, 55, 150, 250]) : cv.ensure_list(cv.int_),
