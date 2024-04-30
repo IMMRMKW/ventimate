@@ -5,10 +5,10 @@
 namespace esphome {
 namespace aqi {
 
-    void aqi::setup()
+    void AQI::setup()
     {
     }
-    void aqi::loop()
+    void AQI::loop()
     {
     }
 
@@ -21,11 +21,12 @@ namespace aqi {
      * @todo add more complete explanation in brief
      */
 
-    void aqi::update()
+    void AQI::update()
     {
         if (sensor_co2_index_) {
             if (sensor_co2_) {
-                sensor_co2_index_->state = find_level(sensor_co2_.get_state(), co2_levels_);
+                sensor_co2_index_->state = find_level(sensor_co2_->get_state(), co2_levels_);
+                sensor_co2_index_->publish_state(sensor_co2_index_->state);
             }
         }
 
@@ -35,23 +36,27 @@ namespace aqi {
                 if (sensor_pm_1_0_) {
                     uint8_t temp = find_level((uint16_t)sensor_pm_1_0_->get_state(), pm_1_0_levels_);
                     index = (temp > index) ? temp : index;
+                    Serial.println(index);
                 }
                 if (sensor_pm_2_5_) {
                     uint8_t temp = find_level((uint16_t)sensor_pm_2_5_->get_state(), pm_2_5_levels_);
                     index = (temp > index) ? temp : index;
+                    Serial.println(index);
                 }
                 if (sensor_pm_10_) {
                     uint8_t temp = find_level((uint16_t)sensor_pm_10_->get_state(), pm_10_levels_);
                     index = (temp > index) ? temp : index;
+                    Serial.println(index);
                 }
                 sensor_pm_index_->state = index;
+                sensor_pm_index_->publish_state(sensor_pm_index_->state);
             }
         }
 
         if (sensor_voc_index_) {
             if (sensor_voc_) {
-                uint16_t level = (uint16_t)sensor_voc_->get_state();
-                uint8_t temp = sensor_voc_index->state = find_level(level, voc_levels_);
+                sensor_voc_index_->state = find_level((uint16_t)sensor_voc_->get_state(), voc_levels_);
+                sensor_voc_index_->publish_state(sensor_voc_index_->state);
             }
         }
     }
@@ -63,7 +68,7 @@ namespace aqi {
      * @todo See also determine_aqi documentation
      */
 
-    uint8_t aqi::find_level(uint16_t level, std::array<uint16_t, 5> levels)
+    uint8_t AQI::find_level(uint16_t level, std::array<uint16_t, 5> levels)
     {
         for (uint8_t i = 0; i < levels.size(); i++) {
             if ((levels[i] - level) > 0) {
@@ -72,3 +77,9 @@ namespace aqi {
         }
         return levels.size();
     }
+
+    void AQI::dump_config()
+    {
+    }
+}
+}

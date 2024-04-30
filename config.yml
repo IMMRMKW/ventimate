@@ -216,6 +216,7 @@ switch:
 sensor:
   - platform: aqi
     id: air_quality_index
+    sensor_co2: scd4x_co2
     sensor_pm_1_0: pmsx003_pm01
     sensor_pm_2_5: pmsx003_pm25
     sensor_pm_10: pmsx003_pm10
@@ -227,8 +228,9 @@ sensor:
       name: "PM index"
       id: pm_index
     voc_index:
-      name: "VOC index"
-      id: voc_index
+     name: "VOC index"
+     id: voc_index
+
   #- platform: calibrated_CO2
   #  sensor: scd4x_co2
   #  default_outdoor_co2: 425

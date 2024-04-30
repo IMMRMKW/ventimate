@@ -6,7 +6,10 @@ from esphome.const import (
     CONF_ID,  
     CONF_SENSOR,
     DEVICE_CLASS_CARBON_DIOXIDE,
+    DEVICE_CLASS_AQI,
     ICON_MOLECULE_CO2,
+    ICON_CHEMICAL_WEAPON,
+    ICON_RADIATOR,
     STATE_CLASS_MEASUREMENT,
     UNIT_EMPTY,
 )
@@ -40,17 +43,23 @@ CONFIG_SCHEMA = cv.Schema(
                 unit_of_measurement=UNIT_EMPTY,
                 icon=ICON_MOLECULE_CO2,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_CARBON_DIOXIDE,
+                device_class=DEVICE_CLASS_AQI,
                 state_class=STATE_CLASS_MEASUREMENT,
     ),
     cv.Required(CONF_PM_INDEX): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
                 icon=ICON_CHEMICAL_WEAPON,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_CARBON_DIOXIDE,
+                device_class=DEVICE_CLASS_AQI,
                 state_class=STATE_CLASS_MEASUREMENT,
     ),
-    cv.Optional(CONF_VOC_INDEX): cv.use_id(sensor.Sensor),
+    cv.Required(CONF_VOC_INDEX): sensor.sensor_schema(
+                unit_of_measurement=UNIT_EMPTY,
+                icon=ICON_RADIATOR,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_AQI,
+                state_class=STATE_CLASS_MEASUREMENT,
+    ),
     cv.Optional(CONF_SENSOR_CO2): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_PM_1_0): cv.use_id(sensor.Sensor),
     cv.Optional(CONF_SENSOR_PM_2_5): cv.use_id(sensor.Sensor),
@@ -107,7 +116,7 @@ async def to_code(config):
 
     if CONF_PM_1_0_LEVELS in config:
         levels = config[CONF_PM_2_5_LEVELS]
-        cg.add(var.set_pm_2_5_levels(levels))
+        cg.add(var.set_pm_1_0_levels(levels))
 
     if CONF_PM_2_5_LEVELS in config:
         levels = config[CONF_PM_2_5_LEVELS]

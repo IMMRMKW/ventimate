@@ -119,7 +119,7 @@ async def to_code(config):
     
     if CONF_PM_1_0_LEVELS in config:
         levels = config[CONF_PM_2_5_LEVELS]
-        cg.add(var.set_pm_2_5_levels(levels))
+        cg.add(var.set_pm_1_0_levels(levels))
 
     if CONF_PM_2_5_LEVELS in config:
         levels = config[CONF_PM_2_5_LEVELS]
