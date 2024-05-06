@@ -7,9 +7,9 @@
 namespace esphome {
 namespace airpurifier {
 
-    class AirpurifierSwitch : public switch_::Switch, public Component {
+    class AirPurifierSwitch : public switch_::Switch, public Component {
     public:
-        AirpurifierSwitch();
+        AirPurifierSwitch();
 
         void setup() override;
         void dump_config() override;

@@ -15,8 +15,8 @@ from esphome.const import (
 )
 
 airpurifier_ns = cg.esphome_ns.namespace('airpurifier')
-AirpurifierNumber = airpurifier_ns.class_(
-    "AirpurifierNumber", number.Number, cg.PollingComponent
+AirPurifierNumber = airpurifier_ns.class_(
+    "AirPurifierNumber", number.Number, cg.PollingComponent
 )
 
 
@@ -39,7 +39,7 @@ def validate(config):
 
     if not config[CONF_OPTIMISTIC] and CONF_SET_ACTION not in config:
         raise cv.Invalid(
-            "Either optimistic mode must be enabled, or set_action must be set, to handle the number being set."
+            "Either optimistic mode must be enabled or set_action must be set, to handle the number being set."
         )
     return config
 

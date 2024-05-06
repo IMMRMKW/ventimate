@@ -1,65 +1,65 @@
-#include "calibrated_CO2.h"
+#include "calibrated_co2.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
-namespace calibrated_CO2 {
+namespace calibrated_co2 {
 
-    static const char* TAG = "calibrated_CO2";
+    static const char* TAG = "calibrated_co2";
 
-    void CALIBRATEDCO2::setup()
+    void CalibratedCo2::setup()
     {
-        //_outDoorCO2 = getCalibrationValue();
+        //this->outdoor_co2 = get_calibration_value();
     }
 
-    void CALIBRATEDCO2::loop()
+    void CalibratedCo2::loop()
     {
         // update();
     }
 
-    void CALIBRATEDCO2::update()
+    void CalibratedCo2::update()
     {
         float offset = 0;
-        if (sensor_->has_state()) {
-            if (!updated_before_) {
-                min_CO2_ = sensor_->get_state();
-                updated_before_ = true;
+        if (this->sensor_->has_state()) {
+            if (!this->has_been_updated_before_) {
+                this->min_co2_ = this->sensor_->get_state();
+                this->has_been_updated_before_ = true;
             } else {
-                if (sensor_->get_state() < min_CO2_) {
-                    min_CO2_ = sensor_->get_state();
+                if (this->sensor_->get_state() < this->min_CO2_) {
+                    this->min_co2_ = this->sensor_->get_state();
                 }
             }
-            offset = min_CO2_ - outDoorCO2_;
+            offset = this->min_co2_ - this->outdoor_co2_;
         }
-        if (get_co2_online_) {
-            if (millis() > wait_) {
-                if (millis() - previous_calibration_ > calibration_interval_) {
-                    outDoorCO2_ = getCalibrationValue();
-                    previous_calibration_ = millis();
+        if (this->retrieve_co2_online_) {
+            if (millis() > this->wait_) {
+                if (millis() - this->previous_calibration_ > this->calibration_interval_) {
+                    this->outdoor_co2_ = get_calibration_value();
+                    this->previous_calibration_ = millis();
                 }
             }
         }
 
-        Serial.print("CO2 online?:");
-        Serial.println(get_co2_online_);
+        Serial.print("Retrieve CO2 online?:");
+        Serial.println(this->retrieve_co2_online_);
         Serial.print("default CO2 outdoor:");
-        Serial.println(default_outDoor_CO2);
-        co2_sensor_->state = sensor_->get_state() - offset;
-        co2_sensor_->publish_state(co2_sensor_->state);
+        Serial.println(this->default_outdoor_co2);
+        this->co2_sensor_->state = this->sensor_->get_state() - offset;
+        this->co2_sensor_->publish_state(this->co2_sensor_->state);
         Serial.print("min_CO2_: ");
-        Serial.println(min_CO2_);
+        Serial.println(this->min_co2_);
         Serial.print("Calibrated CO2: ");
-        Serial.println(co2_sensor_->get_state());
+        Serial.println(this->co2_sensor_->get_state());
         Serial.print("Uncalibrated CO2: ");
-        Serial.println(sensor_->get_state());
-        publish_state(outDoorCO2_);
+        Serial.println(this->sensor_->get_state());
+        publish_state(this->outdoor_co2_);
     }
 
-    void CALIBRATEDCO2::dump_config()
+    void CalibratedCo2::dump_config()
     {
         ESP_LOGCONFIG(TAG, "Empty custom sensor");
     }
 
-    float CALIBRATEDCO2::getCalibrationValue()
+    float CalibratedCo2::get_calibration_value()
     {
         HTTPClient http;
         http.begin("https://charting.numberlens.com/api/teamearth/getdailyco2?authtoken=D43026302F294A5784F7512A8969FE37"); // Replace with the actual URL
@@ -74,10 +74,10 @@ namespace calibrated_CO2 {
                 String value = temp.substring(0, temp.indexOf(","));
                 return value.toFloat();
             } else {
-                return default_outDoor_CO2;
+                return this->default_outdoor_co2;
             }
         } else {
-            return default_outDoor_CO2;
+            return this->default_outdoor_co2;
         }
     }
 

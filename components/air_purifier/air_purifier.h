@@ -11,8 +11,8 @@ namespace airpurifier {
     static const char* const TAG = "airpurifier";
 
     /**
-     * @class Airpurifier
-     * @brief A class that implements airpufier functions.
+     * @class AirPurifier
+     * @brief A class that implements air purifier functions.
      * @todo document all one-liner functions (set/get) and class variables
      */
 
@@ -59,6 +59,7 @@ namespace airpurifier {
         void dump_config() override;
 
     private:
+
     protected:
         sensor::Sensor* sensor_co2_ { nullptr };
         sensor::Sensor* sensor_pm_2_5_ { nullptr };
@@ -86,7 +87,7 @@ namespace airpurifier {
 
         uint32_t prev_time_ = 0;
         float error_Int_ = 0;
-        uint8_t calculate_aqi();
+        uint8_t calculate_air_quality_index();
         uint8_t find_level(uint16_t level, std::array<uint16_t, 5> levels);
         virtual void set_power(uint8_t power);
         uint8_t power_ = 0;

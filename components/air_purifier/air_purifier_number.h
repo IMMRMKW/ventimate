@@ -9,7 +9,7 @@
 namespace esphome {
 namespace airpurifier {
 
-    class AirpurifierNumber : public number::Number, public PollingComponent {
+    class AirPurifierNumber : public number::Number, public PollingComponent {
     public:
         void set_template(std::function<optional<float>()>&& f) { this->f_ = f; }
 

@@ -1,4 +1,4 @@
-#include "airpurifier_switch.h"
+#include "air_purifier_switch.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
@@ -6,13 +6,13 @@ namespace airpurifier {
 
     static const char* const TAG = "airpurifier.switch";
 
-    AirpurifierSwitch::AirpurifierSwitch()
+    AirPurifierSwitch::AirPurifierSwitch()
         : turn_on_trigger_(new Trigger<>())
         , turn_off_trigger_(new Trigger<>())
     {
     }
 
-    void AirpurifierSwitch::loop()
+    void AirPurifierSwitch::loop()
     {
         if (!this->f_.has_value())
             return;
@@ -22,7 +22,7 @@ namespace airpurifier {
 
         this->publish_state(*s);
     }
-    void AirpurifierSwitch::write_state(bool state)
+    void AirPurifierSwitch::write_state(bool state)
     {
         if (this->prev_trigger_ != nullptr) {
             this->prev_trigger_->stop_action();
@@ -39,13 +39,13 @@ namespace airpurifier {
         if (this->optimistic_)
             this->publish_state(state);
     }
-    void AirpurifierSwitch::set_optimistic(bool optimistic) { this->optimistic_ = optimistic; }
-    bool AirpurifierSwitch::assumed_state() { return this->assumed_state_; }
-    void AirpurifierSwitch::set_state_lambda(std::function<optional<bool>()>&& f) { this->f_ = f; }
-    float AirpurifierSwitch::get_setup_priority() const { return setup_priority::HARDWARE - 2.0f; }
-    Trigger<>* AirpurifierSwitch::get_turn_on_trigger() const { return this->turn_on_trigger_; }
-    Trigger<>* AirpurifierSwitch::get_turn_off_trigger() const { return this->turn_off_trigger_; }
-    void AirpurifierSwitch::setup()
+    void AirPurifierSwitch::set_optimistic(bool optimistic) { this->optimistic_ = optimistic; }
+    bool AirPurifierSwitch::assumed_state() { return this->assumed_state_; }
+    void AirPurifierSwitch::set_state_lambda(std::function<optional<bool>()>&& f) { this->f_ = f; }
+    float AirPurifierSwitch::get_setup_priority() const { return setup_priority::HARDWARE - 2.0f; }
+    Trigger<>* AirPurifierSwitch::get_turn_on_trigger() const { return this->turn_on_trigger_; }
+    Trigger<>* AirPurifierSwitch::get_turn_off_trigger() const { return this->turn_off_trigger_; }
+    void AirPurifierSwitch::setup()
     {
         optional<bool> initial_state = this->get_initial_state_with_restore_mode();
 
@@ -59,12 +59,12 @@ namespace airpurifier {
             }
         }
     }
-    void AirpurifierSwitch::dump_config()
+    void AirPurifierSwitch::dump_config()
     {
         LOG_SWITCH("", "Template Switch", this);
         ESP_LOGCONFIG(TAG, "  Optimistic: %s", YESNO(this->optimistic_));
     }
-    void AirpurifierSwitch::set_assumed_state(bool assumed_state) { this->assumed_state_ = assumed_state; }
+    void AirPurifierSwitch::set_assumed_state(bool assumed_state) { this->assumed_state_ = assumed_state; }
 
 } // namespace airpurifier
 } // namespace esphome

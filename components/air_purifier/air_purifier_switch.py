@@ -14,7 +14,7 @@ from esphome.const import (
 )
 
 airpurifier_ns = cg.esphome_ns.namespace('airpurifier')
-AirpurifierSwitch = airpurifier_ns.class_("AirpurifierSwitch", switch.Switch, cg.Component)
+AirPurifierSwitch = airpurifier_ns.class_("AirPurifierSwitch", switch.Switch, cg.Component)
 
 
 def validate(config):
@@ -31,7 +31,7 @@ def validate(config):
 
 
 CONFIG_SCHEMA = cv.All(
-    switch.switch_schema(AirpurifierSwitch)
+    switch.switch_schema(AirPurifierSwitch)
     .extend(
         {
             cv.Optional(CONF_LAMBDA): cv.returning_lambda,

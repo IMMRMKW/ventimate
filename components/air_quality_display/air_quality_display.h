@@ -1,5 +1,5 @@
-#ifndef AQDISPLAY_H
-#define AQDISPLAY_H
+#ifndef AIRQUALITYDISPLAY_H
+#define AIRQUALITYDISPLAY_H
 
 #include <Arduino.h>
 #undef WHITE
@@ -21,15 +21,15 @@
 #include "bitmaps.h"
 
 #define MAX_LEVEL 5
-#define LEVEL0 0x04A8
-#define LEVEL1 0x8E27
-#define LEVEL2 0xFF66
-#define LEVEL3 0xFD88
-#define LEVEL4 0xF4A3
-#define LEVEL5 0xF800
+#define COLOR_LEVEL0 0x04A8
+#define COLOR_LEVEL1 0x8E27
+#define COLOR_LEVEL2 0xFF66
+#define COLOR_LEVEL3 0xFD88
+#define COLOR_LEVEL4 0xF4A3
+#define COLOR_LEVEL5 0xF800
 
-#define RH_WIDTH 11
-#define RH_HEIGHT 14
+#define RELATIVEHUMIDITY_WIDTH 11
+#define RELATIVEHUMIDITY_HEIGHT 14
 
 #define SEG_WIDTH 12
 #define SEG_HEIGHT 8
@@ -39,7 +39,7 @@
 #define PLOT_Y 36
 
 namespace esphome {
-namespace aqdisplay {
+namespace airqualitydisplay {
 
     /**
      * @enum status
@@ -57,25 +57,25 @@ namespace aqdisplay {
     enum connectivity {
         none = 0,
         wifi,
-        Bluetooth
+        bluetooth
     };
 
-    static const char* const TAG = "aqdisplay";
+    static const char* const TAG = "airqualitydisplay";
 
-    class AQDISPLAY : public PollingComponent {
+    class AirQualityDisplay : public PollingComponent {
     public:
         void setup() override;
         void loop() override;
         void update() override;
-        void printTemp(int16_t x, int16_t y, float temp);
-        void printComma(int16_t x, int16_t y);
-        void printRH(int16_t x, int16_t y, float RH);
+        void print_temperature(int16_t x, int16_t y, float temperature);
+        void print_comma(int16_t x, int16_t y);
+        void print_humidity(int16_t x, int16_t y, float humidity);
 
         void set_cs_pin(InternalGPIOPin* pin) { this->cs_pin_ = pin; }
         void set_dc_pin(InternalGPIOPin* pin) { this->dc_pin_ = pin; }
         void set_rst_pin(InternalGPIOPin* pin) { this->rst_pin_ = pin; }
 
-        void set_clock(homeassistant::HomeassistantTime* clock) { clock_ = clock; }
+        void set_clock(homeassistant::HomeAssistantTime* clock) { clock_ = clock; }
         void set_network(wifi::WiFiComponent* network) { network_ = network; }
 
         void set_sensor_co2(sensor::Sensor* sensor) { sensor_co2_ = sensor; }
@@ -83,8 +83,8 @@ namespace aqdisplay {
         void set_sensor_pm_2_5(sensor::Sensor* sensor) { sensor_pm_2_5_ = sensor; }
         void set_sensor_pm_10(sensor::Sensor* sensor) { sensor_pm_10_ = sensor; }
         void set_sensor_power(sensor::Sensor* sensor) { sensor_power_ = sensor; }
-        void set_sensor_rh(sensor::Sensor* sensor) { sensor_rh_ = sensor; }
-        void set_sensor_temp(sensor::Sensor* sensor) { sensor_temp_ = sensor; }
+        void set_sensor_humidity(sensor::Sensor* sensor) { sensor_humidity_ = sensor; }
+        void set_sensor_temperature(sensor::Sensor* sensor) { sensor_temperature_ = sensor; }
         void set_sensor_voc(sensor::Sensor* sensor) { sensor_voc_ = sensor; }
 
         void set_pm_1_0_levels(std::array<uint16_t, 5> levels) { pm_1_0_levels_ = levels; }
@@ -93,23 +93,23 @@ namespace aqdisplay {
         void set_voc_levels(std::array<uint16_t, 5> levels) { voc_levels_ = levels; }
         void set_co2_levels(std::array<uint16_t, 5> levels) { co2_levels_ = levels; }
 
-        void setPM(uint8_t level);
-        void setCO2(uint8_t level);
-        void setVOC(uint8_t level);
-        void setTime(ESPTime current_time);
-        void setConnectivity(uint8_t connect);
-        void setFan(bool show, uint8_t level);
+        void set_pm(uint8_t level);
+        void set_co2(uint8_t level);
+        void set_voc(uint8_t level);
+        void set_time(ESPTime current_time);
+        void set_connectivity(uint8_t connect);
+        void set_fan(bool show, uint8_t level);
 
     private:
-        homeassistant::HomeassistantTime* clock_ { nullptr };
+        homeassistant::HomeAssistantTime* clock_ { nullptr };
         wifi::WiFiComponent* network_ { nullptr };
         sensor::Sensor* sensor_co2_ { nullptr };
         sensor::Sensor* sensor_pm_1_0_ { nullptr };
         sensor::Sensor* sensor_pm_2_5_ { nullptr };
         sensor::Sensor* sensor_pm_10_ { nullptr };
         sensor::Sensor* sensor_power_ { nullptr };
-        sensor::Sensor* sensor_rh_ { nullptr };
-        sensor::Sensor* sensor_temp_ { nullptr };
+        sensor::Sensor* sensor_humidity_ { nullptr };
+        sensor::Sensor* sensor_temperature_ { nullptr };
         sensor::Sensor* sensor_voc_ { nullptr };
 
         std::array<uint16_t, 5> pm_1_0_levels_ = { 0 };
@@ -118,30 +118,30 @@ namespace aqdisplay {
         std::array<uint16_t, 5> voc_levels_ = { 0 };
         std::array<uint16_t, 5> co2_levels_ = { 0 };
 
-        uint8_t find_level(uint16_t level, std::array<uint16_t, 5> levels);
+        uint8_t find_graph_level(uint16_t level, std::array<uint16_t, 5> levels);
 
-        uint16_t colors[6] = { LEVEL0, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5 };
+        uint16_t colors[6] = { COLOR_LEVEL0, COLOR_LEVEL1, COLOR_LEVEL2, COLOR_LEVEL3, COLOR_LEVEL4, COLOR_LEVEL5 };
 
         Arduino_DataBus* bus;
         Arduino_GFX* gfx;
 
-        int8_t pm_level = -1;
-        int8_t CO2_level = -1;
-        int8_t VOC_level = -1;
-        int8_t fan_level = -1;
-        float temp_level = 0;
-        uint8_t rh_level = 0;
+        int8_t pm_level_ = -1;
+        int8_t co2_level_ = -1;
+        int8_t voc_level_ = -1;
+        int8_t fan_level_ = -1;
+        float temperature_level_ = 0;
+        uint8_t humidity_level_ = 0;
 
-        bool connectivity_shown = false;
+        bool is_showing_connectivity_ = false;
 
-        void drawGraph();
-        void drawFanSquare();
-        void drawRow(uint8_t row, uint8_t new_level, int8_t prev_level);
-        void drawLevel(uint8_t level, uint8_t row, bool flag);
+        void draw_graph();
+        void draw_fan_square();
+        void draw_row(uint8_t row, uint8_t new_level, int8_t prev_level);
+        void draw_graph_level(uint8_t level, uint8_t row, bool flag);
 
         uint8_t state_ = welcome;
         uint8_t counter_ = 0;
-        bool graph_shown_ = false;
+        bool is_showing_graph_ = false;
 
     protected:
         InternalGPIOPin* cs_pin_ { nullptr };

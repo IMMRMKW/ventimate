@@ -8,7 +8,7 @@
 #define CALIBRATION_INTERVAL 60
 
 namespace esphome {
-namespace calibrated_CO2 {
+namespace calibrated_co2 {
     /**
      * @class Calibrated_CO2
      * @brief A class that implements extended calibration functionality by getting the Baseline environment
@@ -21,7 +21,7 @@ namespace calibrated_CO2 {
      * @todo check if calibration method is sensible, or smarter methods are available
      */
 
-    class CALIBRATEDCO2 : public sensor::Sensor, public PollingComponent {
+    class CalibratedCo2 : public sensor::Sensor, public PollingComponent {
     public:
         void setup() override;
         void loop() override;
@@ -29,25 +29,24 @@ namespace calibrated_CO2 {
         void set_sensor(sensor::Sensor* sensor) { sensor_ = sensor; }
         void set_co2_sensor(sensor::Sensor* co2_sensor) { co2_sensor_ = co2_sensor; }
         void dump_config() override;
-        void set_Getting_CO2_Online(bool flag) { get_co2_online_ = flag; }
-        void set_default_outdoor_CO2(float default_value) { default_outDoor_CO2 = default_value; }
+        void set_flag_retrieving_co2_online_(bool flag) { retrieve_co2_online_ = flag; }
+        void set_default_outdoor_co2(float default_value) { default_outdoor_co2 = default_value; }
 
     private:
-        float
-        getCalibrationValue();
-        float default_outDoor_CO2 = DEFAULT_OUTDOOR_CO2;
-        float outDoorCO2_ = DEFAULT_OUTDOOR_CO2;
-        float min_CO2_;
+        float get_calibration_value();
+        float default_outdoor_co2 = DEFAULT_OUTDOOR_CO2;
+        float outdoor_co2_ = DEFAULT_OUTDOOR_CO2;
+        float min_co2_;
         uint32_t wait_ = WAITING_TIME * 1000; // waiting time
         uint32_t calibration_interval_ = CALIBRATION_INTERVAL * 1000; // calibration interval
         uint32_t previous_calibration_ = 0; // moment of previous calibration in milliseconds
-        bool get_co2_online_ = false;
+        bool retrieve_co2_online_ = false;
 
     protected:
         sensor::Sensor* sensor_ { nullptr };
         sensor::Sensor* co2_sensor_ { nullptr };
-        bool updated_before_ = false;
+        bool has_been_updated_before_ = false;
     };
 
-} // namespace calibrated_CO2
+} // namespace calibrated_co2
 } // namespace esphome

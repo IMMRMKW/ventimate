@@ -1,4 +1,4 @@
-#include "airpurifier_number.h"
+#include "air_purifier_number.h"
 #include "esphome/core/log.h"
 
 namespace esphome {

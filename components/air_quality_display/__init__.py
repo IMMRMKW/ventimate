@@ -18,8 +18,8 @@ CONF_SENSOR_FAN_POWER = "sensor_fan_power"
 CONF_SENSOR_PM_1_0 = "sensor_pm_1_0"
 CONF_SENSOR_PM_2_5 = "sensor_pm_2_5"
 CONF_SENSOR_PM_10 = "sensor_pm_10"
-CONF_SENSOR_RH = "sensor_rh"
-CONF_SENSOR_TEMP = "sensor_temp"
+CONF_SENSOR_HUMIDITY = "sensor_humidity"
+CONF_SENSOR_TEMPERATURE = "sensor_temperature"
 CONF_SENSOR_VOC = "sensor_voc"
 
 
@@ -33,12 +33,12 @@ CONF_CLOCK = "clock"
 CONF_NETWORK = "network"
 
 
-aqdisplay_ns = cg.esphome_ns.namespace('aqdisplay')
-AQDISPLAY = aqdisplay_ns.class_('AQDISPLAY', cg.PollingComponent)
+airqualitydisplay_ns = cg.esphome_ns.namespace('airqualitydisplay')
+AIRQUALITYDISPLAY = airqualitydisplay_ns.class_('AirQualityDisplay', cg.PollingComponent)
 
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(): cv.declare_id(AQDISPLAY),   
+        cv.GenerateID(): cv.declare_id(AIRQUALITYDISPLAY),   
         cv.Optional(CONF_CS_PIN): cv.All(pins.internal_gpio_input_pin_schema),
         cv.Optional(CONF_DC_PIN): cv.All(pins.internal_gpio_input_pin_schema),
         cv.Optional(CONF_RST_PIN): cv.All(pins.internal_gpio_input_pin_schema),
@@ -105,13 +105,13 @@ async def to_code(config):
         sens = await cg.get_variable(config[CONF_SENSOR_PM_10])
         cg.add(var.set_sensor_pm_10(sens))
     
-    if CONF_SENSOR_RH in config:
-        sens = await cg.get_variable(config[CONF_SENSOR_RH])
-        cg.add(var.set_sensor_rh(sens))
+    if CONF_SENSOR_HUMIDITY in config:
+        sens = await cg.get_variable(config[CONF_SENSOR_HUMIDITY])
+        cg.add(var.set_sensor_humidity(sens))
     
-    if CONF_SENSOR_TEMP in config:
-        sens = await cg.get_variable(config[CONF_SENSOR_TEMP])
-        cg.add(var.set_sensor_temp(sens))
+    if CONF_SENSOR_TEMPERATURE in config:
+        sens = await cg.get_variable(config[CONF_SENSOR_TEMPERATURE])
+        cg.add(var.set_sensor_temperature(sens))
 
     if CONF_SENSOR_VOC in config:
         sens = await cg.get_variable(config[CONF_SENSOR_VOC])
@@ -137,10 +137,7 @@ async def to_code(config):
         levels = config[CONF_CO2_LEVELS]
         cg.add(var.set_co2_levels(levels))
     
-    
-
-    
-    
+ 
     if CONF_SENSOR_VOC in config:
         sens = await cg.get_variable(config[CONF_SENSOR_VOC])
         cg.add(var.set_sensor_voc(sens))
