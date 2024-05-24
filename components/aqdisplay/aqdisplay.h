@@ -81,27 +81,26 @@ namespace aqdisplay {
         void printComma(int16_t x, int16_t y);
         void printRH(int16_t x, int16_t y, float RH);
 
-        void set_cs_pin(InternalGPIOPin* pin) { this->cs_pin_ = pin; }
+        void set_brightness(uint8_t brightness) { brightness_ = brightness; };
+
+        void set_cs_pin(InternalGPIOPin* pin)
+        {
+            this->cs_pin_ = pin;
+        }
         void set_dc_pin(InternalGPIOPin* pin) { this->dc_pin_ = pin; }
         void set_rst_pin(InternalGPIOPin* pin) { this->rst_pin_ = pin; }
 
         void set_clock(homeassistant::HomeassistantTime* clock) { clock_ = clock; }
         void set_network(wifi::WiFiComponent* network) { network_ = network; }
 
-        void set_sensor_co2(sensor::Sensor* sensor) { sensor_co2_ = sensor; }
-        void set_sensor_pm_1_0(sensor::Sensor* sensor) { sensor_pm_1_0_ = sensor; }
-        void set_sensor_pm_2_5(sensor::Sensor* sensor) { sensor_pm_2_5_ = sensor; }
-        void set_sensor_pm_10(sensor::Sensor* sensor) { sensor_pm_10_ = sensor; }
+        void set_sensor_co2_index(sensor::Sensor* sensor) { sensor_co2_index_ = sensor; }
+        void set_sensor_pm_index(sensor::Sensor* sensor) { sensor_pm_index_ = sensor; }
+        void set_sensor_voc_index(sensor::Sensor* sensor) { sensor_voc_index_ = sensor; }
+
         void set_sensor_power(sensor::Sensor* sensor) { sensor_power_ = sensor; }
         void set_sensor_rh(sensor::Sensor* sensor) { sensor_rh_ = sensor; }
         void set_sensor_temp(sensor::Sensor* sensor) { sensor_temp_ = sensor; }
         void set_sensor_voc(sensor::Sensor* sensor) { sensor_voc_ = sensor; }
-
-        void set_pm_1_0_levels(std::array<uint16_t, 5> levels) { pm_1_0_levels_ = levels; }
-        void set_pm_2_5_levels(std::array<uint16_t, 5> levels) { pm_2_5_levels_ = levels; }
-        void set_pm_10_levels(std::array<uint16_t, 5> levels) { pm_10_levels_ = levels; }
-        void set_voc_levels(std::array<uint16_t, 5> levels) { voc_levels_ = levels; }
-        void set_co2_levels(std::array<uint16_t, 5> levels) { co2_levels_ = levels; }
 
         void setPM(uint8_t level);
         void setCO2(uint8_t level);
@@ -115,6 +114,11 @@ namespace aqdisplay {
         InternalGPIOPin* dc_pin_ { nullptr };
         InternalGPIOPin* rst_pin_ { nullptr };
         homeassistant::HomeassistantTime* clock_ { nullptr };
+
+        sensor::Sensor* sensor_co2_index_ { nullptr };
+        sensor::Sensor* sensor_pm_index_ { nullptr };
+        sensor::Sensor* sensor_voc_index_ { nullptr };
+
         sensor::Sensor* sensor_co2_ { nullptr };
         sensor::Sensor* sensor_pm_1_0_ { nullptr };
         sensor::Sensor* sensor_pm_2_5_ { nullptr };
@@ -135,8 +139,8 @@ namespace aqdisplay {
 
         uint16_t colors[6] = { LEVEL0, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5 };
 
-        Arduino_DataBus* bus;
-        Arduino_GFX* gfx;
+        Arduino_DataBus* bus_;
+        Arduino_GFX* gfx_;
 
         int8_t pm_level = -1;
         int8_t CO2_level = -1;
@@ -158,6 +162,8 @@ namespace aqdisplay {
         uint8_t state_ = welcome;
         uint8_t counter_ = 0;
         bool graph_shown_ = false;
+
+        uint8_t brightness_ = 1;
     };
 }
 

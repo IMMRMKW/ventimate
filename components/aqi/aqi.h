@@ -46,6 +46,7 @@ namespace aqi {
         sensor::Sensor* sensor_co2_index_ { nullptr };
         sensor::Sensor* sensor_pm_index_ { nullptr };
         sensor::Sensor* sensor_voc_index_ { nullptr };
+
         sensor::Sensor* sensor_co2_ { nullptr };
         sensor::Sensor* sensor_pm_1_0_ { nullptr };
         sensor::Sensor* sensor_pm_2_5_ { nullptr };

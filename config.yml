@@ -140,14 +140,13 @@ bme680_bsec:
 
 aqdisplay:
   id: aqmonitor
+  setup_priority: 850
   chip_select_pin: GPIO5
   dc_pin: GPIO19
   reset_pin: GPIO4
-  sensor_co2: scd4x_co2
-  sensor_pm_1_0: pmsx003_pm01
-  sensor_pm_2_5: pmsx003_pm25
-  sensor_pm_10: pmsx003_pm10
-  sensor_voc: bvoc
+  sensor_co2_index: co2_index
+  sensor_pm_index: pm_index
+  sensor_voc_index: voc_index
   sensor_rh: bme680_humidity
   sensor_temp: bme680_temperature
   sensor_fan_power: current_power
@@ -163,6 +162,8 @@ airpurifier:
   power_enable_pin: GPIO33
   power_pwm_pin: GPIO2
   #fan_pwm_pin: GPIO32
+  sensor_pm_index: pm_index
+  sensor_voc_index: voc_index
   min_voltage: 3.6
   purge_interval: 30
   purge_duration: 10

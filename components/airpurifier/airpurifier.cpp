@@ -33,11 +33,11 @@ namespace airpurifier {
             if (index > 0) {
                 float diff_time = float(cur_time - prev_time_) / 1000.0;
 
-                error_Int_ = I_[index] * diff_time * float(index) + error_Int_;
+                error_Int_ = I_[index] * diff_time + error_Int_;
 
                 error_Int_ = (error_Int_ > max_power_) ? max_power_ : error_Int_;
 
-                float temp = error_Int_ + P_[index] * index;
+                float temp = error_Int_ + P_[index];
                 power_setpoint = (temp > max_power_) ? max_power_ : temp;
             }
             prev_time_ = cur_time;
@@ -51,7 +51,6 @@ namespace airpurifier {
         if (use_purge_) {
             if (!manual_ && purge_) {
                 if (cur_time - prev_purge_ > purge_duration_) {
-                    Serial.println(cur_time - prev_purge_);
                     purge_ = false;
                 } else {
                     power_setpoint = (purge_power_ > max_power_) ? max_power_ : purge_power_;
@@ -78,25 +77,19 @@ namespace airpurifier {
     uint8_t AIRPURIFIER::calculate_aqi()
     {
         uint8_t index = 0;
-        if (sensor_co2_) {
-            uint16_t level = (uint16_t)sensor_co2_->get_state();
-            uint8_t temp = find_level(level, co2_levels_);
-            index = (temp > index) ? temp : index;
+        if (sensor_co2_index_) {
+            uint8_t index_co2 = (uint8_t)sensor_co2_index_->get_state();
+            index = (index_co2 > index) ? index_co2 : index;
         }
-        if (sensor_pm_2_5_) {
-            uint16_t level = (uint16_t)sensor_pm_2_5_->get_state();
-            uint8_t temp = find_level(level, pm_2_5_levels_);
-            index = (temp > index) ? temp : index;
+
+        if (sensor_pm_index_) {
+            uint8_t index_pm = (uint8_t)sensor_pm_index_->get_state();
+            index = (index_pm > index) ? index_pm : index;
         }
-        if (sensor_pm_10_) {
-            uint16_t level = (uint16_t)sensor_pm_10_->get_state();
-            uint8_t temp = find_level(level, pm_10_levels_);
-            index = (temp > index) ? temp : index;
-        }
-        if (sensor_voc_) {
-            uint16_t level = (uint16_t)sensor_voc_->get_state();
-            uint8_t temp = find_level(level, voc_levels_);
-            index = (temp > index) ? temp : index;
+
+        if (sensor_voc_index_) {
+            uint8_t index_voc = (uint8_t)sensor_voc_index_->get_state();
+            index = (index_voc > index) ? index_voc : index;
         }
         return index;
     }
@@ -145,10 +138,10 @@ namespace airpurifier {
      * @todo name can be changed once controller is changed to have a time constant instead of a strict dt*error*gain
      */
 
-    void AIRPURIFIER::set_integral_gain(std::array<float, 5> constants)
+    void AIRPURIFIER::set_integral_gain(std::array<float, 6> constants)
     {
         for (uint8_t i = 0; i < constants.size(); i++) {
-            I_[i] = 100 / (i * constants[i]);
+            I_[i] = 100 / constants[i];
         }
     }
 }
