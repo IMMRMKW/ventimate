@@ -53,7 +53,7 @@ https://web.esphome.io/
 ## Inserting fan art (pun intended) in your fan
 Insert explanation of how to include fan art
 ## Creating gauge cards indicating air quality index
-[converting 16 bit colors to 24 bit colors]{https://stackoverflow.com/questions/2442576/how-does-one-convert-16-bit-rgb565-to-24-bit-rgb888} and [vice versa]{https://greekgeeks.net/#maker-tools_convertColor}
+[converting 16 bit colors to 24 bit colors](https://stackoverflow.com/questions/2442576/how-does-one-convert-16-bit-rgb565-to-24-bit-rgb888) and [vice versa](https://greekgeeks.net/#maker-tools_convertColor)
 
 ```yaml
 type: gauge
