@@ -45,7 +45,7 @@ namespace myfan {
         const float max_output_voltage_ = 12;
         const uint8_t resolution_ = 8;
         const uint32_t power_pwm_frequency = 50000;
-        uint32_t fan_pwm_frequency_ = 0;
+        uint32_t fan_pwm_frequency_ = 50000;
         float min_duty_cycle_ = 0;
         uint8_t power_pwm_channel_ = 0;
         uint8_t fan_pwm_channel_ = 0;

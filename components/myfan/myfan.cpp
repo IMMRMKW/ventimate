@@ -9,13 +9,20 @@ namespace myfan {
     {
         power_en_pin_->pin_mode(gpio::FLAG_OUTPUT);
         power_en_pin_->digital_write(true);
-        ledcSetup(power_pwm_channel_, power_pwm_frequency, resolution_);
-        ledcAttachPin(power_pwm_pin_->get_pin(), power_pwm_channel_);
+        power_pwm_pin_->pin_mode(gpio::FLAG_OUTPUT);
+
         if (fan_pwm_flag_) {
+            fan_pwm_pin_->pin_mode(gpio::FLAG_OUTPUT);
             ledcSetup(fan_pwm_channel_, fan_pwm_frequency_, resolution_);
             ledcAttachPin(fan_pwm_pin_->get_pin(), fan_pwm_channel_);
-            ledcWrite(power_pwm_channel_, 1);
             ledcWrite(fan_pwm_channel_, 0);
+            Serial.println("here");
+
+            power_pwm_pin_->digital_write(true);
+        } else {
+            ledcSetup(power_pwm_channel_, power_pwm_frequency, resolution_);
+            ledcAttachPin(power_pwm_pin_->get_pin(), power_pwm_channel_);
+            ledcWrite(power_pwm_channel_, 0);
         }
     }
 
@@ -23,8 +30,12 @@ namespace myfan {
     {
         Serial.print("Set power: ");
         Serial.println(power);
+        Serial.println(fan_pwm_flag_);
+        Serial.println(power_pwm_channel_);
+        Serial.println(fan_pwm_channel_);
         switch (fan_pwm_flag_) {
         case true:
+            Serial.println("power pwm channel");
             if (power == 0) {
                 ledcWrite(fan_pwm_channel_, 0);
             } else {

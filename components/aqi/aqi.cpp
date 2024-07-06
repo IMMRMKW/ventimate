@@ -25,8 +25,13 @@ namespace aqi {
     {
         if (sensor_co2_index_) {
             if (sensor_co2_) {
-                sensor_co2_index_->state = find_level(sensor_co2_->get_state(), co2_levels_);
-                sensor_co2_index_->publish_state(sensor_co2_index_->state);
+                if (!isnan(sensor_co2_->get_state())) {
+                    sensor_co2_index_->state = find_level(sensor_co2_->get_state(), co2_levels_);
+                    sensor_co2_index_->publish_state(sensor_co2_index_->state);
+                } else {
+                    sensor_co2_index_->state = 0;
+                    sensor_co2_index_->publish_state(sensor_co2_index_->state);
+                }
             }
         }
 
@@ -34,19 +39,22 @@ namespace aqi {
             if (sensor_pm_1_0_ || sensor_pm_2_5_ || sensor_pm_10_) {
                 uint8_t index = 0;
                 if (sensor_pm_1_0_) {
-                    uint8_t temp = find_level((uint16_t)sensor_pm_1_0_->get_state(), pm_1_0_levels_);
-                    index = (temp > index) ? temp : index;
-                    Serial.println(index);
+                    if (!isnan(sensor_pm_1_0_->get_state())) {
+                        uint8_t temp = find_level((uint16_t)sensor_pm_1_0_->get_state(), pm_1_0_levels_);
+                        index = (temp > index) ? temp : index;
+                    }
                 }
                 if (sensor_pm_2_5_) {
-                    uint8_t temp = find_level((uint16_t)sensor_pm_2_5_->get_state(), pm_2_5_levels_);
-                    index = (temp > index) ? temp : index;
-                    Serial.println(index);
+                    if (!isnan(sensor_pm_2_5_->get_state())) {
+                        uint8_t temp = find_level((uint16_t)sensor_pm_2_5_->get_state(), pm_2_5_levels_);
+                        index = (temp > index) ? temp : index;
+                    }
                 }
                 if (sensor_pm_10_) {
-                    uint8_t temp = find_level((uint16_t)sensor_pm_10_->get_state(), pm_10_levels_);
-                    index = (temp > index) ? temp : index;
-                    Serial.println(index);
+                    if (!isnan(sensor_pm_10_->get_state())) {
+                        uint8_t temp = find_level((uint16_t)sensor_pm_10_->get_state(), pm_10_levels_);
+                        index = (temp > index) ? temp : index;
+                    }
                 }
                 sensor_pm_index_->state = index;
                 sensor_pm_index_->publish_state(sensor_pm_index_->state);
@@ -54,8 +62,12 @@ namespace aqi {
         }
 
         if (sensor_voc_index_) {
-            if (sensor_voc_) {
-                sensor_voc_index_->state = find_level((uint16_t)sensor_voc_->get_state(), voc_levels_);
+            if (!std::isnan(sensor_voc_->state)) {
+                sensor_voc_index_->state
+                    = find_level((uint16_t)sensor_voc_->state, voc_levels_);
+                sensor_voc_index_->publish_state(sensor_voc_index_->state);
+            } else {
+                sensor_voc_index_->state = 0;
                 sensor_voc_index_->publish_state(sensor_voc_index_->state);
             }
         }

@@ -5,6 +5,7 @@
 #include "array"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/core/component.h"
+#include <math.h>
 
 namespace esphome {
 namespace aqi {

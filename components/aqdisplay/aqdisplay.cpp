@@ -8,20 +8,36 @@ namespace aqdisplay {
 
         bus_ = new Arduino_HWSPI(dc_pin_->get_pin(), cs_pin_->get_pin() /* CS */);
         gfx_ = new Arduino_SSD1331(bus_, rst_pin_->get_pin() /* RST */, 0 /* rotation */);
+        dc_pin_->pin_mode(gpio::FLAG_OUTPUT);
+        dc_pin_->digital_write(false);
+        delay(1);
+        dc_pin_->digital_write(true);
 
         gfx_->begin();
         dc_pin_->pin_mode(gpio::FLAG_OUTPUT);
+        dc_pin_->digital_write(true);
 
         bus_->sendCommand(SSD1331_MASTERCURRENT); // 0x87
         bus_->sendCommand(brightness_);
 
         gfx_->fillScreen(GFX_BLACK);
         gfx_->setTextColor(GFX_WHITE);
+        t_since_start = millis();
     }
 
     void AQDISPLAY::update()
     {
         switch (state_) {
+        case startup: {
+            /*if (millis() - t_since_start > 1000) {
+                dc_pin_->digital_write(false);
+                delay(1);
+                dc_pin_->digital_write(true);
+                state_ = welcome;
+            }*/
+            state_ = welcome;
+            break;
+        }
         case welcome: {
             gfx_->draw16bitRGBBitmap(0, 0, bitmap_welcome, 96, 64);
             counter_++;

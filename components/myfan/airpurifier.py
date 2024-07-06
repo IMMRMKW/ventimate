@@ -42,7 +42,7 @@ CONFIG_SCHEMA = ap.CONFIG_SCHEMA.extend(cv.Schema(
     cv.Optional(CONF_FAN_PWM_CHANNEL, default = 15): cv.int_,
     cv.Optional(CONF_MAX_VOLTAGE, default = 12): cv.float_range(0,12),
     cv.Optional(CONF_MIN_VOLTAGE, default = 0): cv.float_range(0,12),
-    cv.Optional(CONF_FAN_PWM_FREQUENCY): cv.int_,
+    cv.Optional(CONF_FAN_PWM_FREQUENCY, default = 20000): cv.int_,
     cv.Optional(CONF_MIN_DUTY_CYCLE): cv.float_range(0,1),
 
     }))

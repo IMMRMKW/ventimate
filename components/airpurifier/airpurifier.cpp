@@ -30,6 +30,8 @@ namespace airpurifier {
         if (!manual_) {
             // Simple controller that determines the required fan power if the airpurifier is on automatic mode.
             int8_t index = calculate_aqi();
+            Serial.println(index);
+            /*
             if (index > 0) {
                 float diff_time = float(cur_time - prev_time_) / 1000.0;
 
@@ -39,7 +41,7 @@ namespace airpurifier {
 
                 float temp = error_Int_ + P_[index];
                 power_setpoint = (temp > max_power_) ? max_power_ : temp;
-            }
+            }*/
             prev_time_ = cur_time;
         } else {
             // If not on automatic mode, simply use max fan power.

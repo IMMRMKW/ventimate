@@ -48,7 +48,8 @@ namespace aqdisplay {
      * @brief An enum for the state machine of the aqdisplay. It discriminates between a welcome state at startup, and a working state where measurement data is updated and presented continously
      */
     enum status {
-        welcome = 0,
+        startup = 0,
+        welcome,
         working
     };
 
@@ -150,6 +151,8 @@ namespace aqdisplay {
         uint8_t rh_level = 0;
         uint8_t fan_level_ = 255;
 
+        uint32_t t_since_start = 0;
+
         bool single_digits = false;
         bool connectivity_shown = false;
 
@@ -159,7 +162,7 @@ namespace aqdisplay {
         void drawRow(uint8_t row, uint8_t new_level, int8_t prev_level);
         void drawLevel(uint8_t level, uint8_t row, bool flag);
 
-        uint8_t state_ = welcome;
+        uint8_t state_ = startup;
         uint8_t counter_ = 0;
         bool graph_shown_ = false;
 
