@@ -1,24 +1,28 @@
 {
 	"folders": [
-		{
-			"path": "../esphome"
-		},
-		{
-			"path": "."
-		},
-		{
-			"path": "../../OneDrive/Documents/PlatformIO/Projects/CO2_calibration"
-		},
-		{
-			"path": "../../OneDrive/Documents/PlatformIO/Projects/FUSB302_dev"
-		},
-		{
-			"path": "../../OneDrive/Documents/PlatformIO/Projects/Test_fan"
-		},
-		{
-			"path": "../../OneDrive/Documents/PlatformIO/Projects/WakeUpLight"
-		}
-	],
+        {
+            "path": "../esphome"
+        },
+        {
+            "path": "."
+        },
+        {
+            "path": "../../OneDrive/Documents/PlatformIO/Projects/CO2_calibration"
+        },
+        {
+            "path": "../../OneDrive/Documents/PlatformIO/Projects/FUSB302_dev"
+        },
+        {
+            "path": "../../OneDrive/Documents/PlatformIO/Projects/Test_fan"
+        },
+        {
+            "path": "../../OneDrive/Documents/PlatformIO/Projects/WakeUpLight"
+        },
+        {
+            "name": "AQ_display_test",
+            "path": "../../OneDrive/Documents/PlatformIO/Projects/AQ_display_test"
+        }
+    ],
     "settings": {
         "files.associations": {
             "array": "cpp",

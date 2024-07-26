@@ -58,7 +58,7 @@ CONFIG_SCHEMA = cv.Schema({
     cv.Optional(CONF_SENSOR_PM_INDEX): cv.use_id(sensor.Sensor),
 
     cv.Optional(CONF_PROPORTIONAL_GAIN, default = [0, 20, 40, 60, 80, 100]) : cv.ensure_list(cv.int_),
-    cv.Optional(CONF_INTEGRAL_GAIN, default = [0, 60, 120, 1800, 3600, 7200]) : cv.ensure_list(cv.int_),
+    cv.Optional(CONF_INTEGRAL_GAIN, default = [0, 7200, 3600, 1800, 900, 300]) : cv.ensure_list(cv.int_),
     cv.Optional(CONF_USE_PURGE, default = True): cv.boolean,
     cv.Optional(CONF_PURGE_INTERVAL, default = 1800): cv.int_,
     cv.Optional(CONF_PURGE_DURATION, default = 60): cv.int_,

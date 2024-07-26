@@ -48,8 +48,7 @@ namespace aqdisplay {
      * @brief An enum for the state machine of the aqdisplay. It discriminates between a welcome state at startup, and a working state where measurement data is updated and presented continously
      */
     enum status {
-        startup = 0,
-        welcome,
+        welcome = 0,
         working
     };
 
@@ -84,10 +83,9 @@ namespace aqdisplay {
 
         void set_brightness(uint8_t brightness) { brightness_ = brightness; };
 
-        void set_cs_pin(InternalGPIOPin* pin)
-        {
-            this->cs_pin_ = pin;
-        }
+        void set_sclk_pin(InternalGPIOPin* pin) { this->sclk_pin_ = pin; };
+        void set_mosi_pin(InternalGPIOPin* pin) { this->mosi_pin_ = pin; };
+        void set_cs_pin(InternalGPIOPin* pin) { this->cs_pin_ = pin; }
         void set_dc_pin(InternalGPIOPin* pin) { this->dc_pin_ = pin; }
         void set_rst_pin(InternalGPIOPin* pin) { this->rst_pin_ = pin; }
 
@@ -111,6 +109,8 @@ namespace aqdisplay {
         void setFan(int16_t x, int16_t y, uint8_t level);
 
     private:
+        InternalGPIOPin* sclk_pin_ { nullptr };
+        InternalGPIOPin* mosi_pin_ { nullptr };
         InternalGPIOPin* cs_pin_ { nullptr };
         InternalGPIOPin* dc_pin_ { nullptr };
         InternalGPIOPin* rst_pin_ { nullptr };
@@ -142,6 +142,7 @@ namespace aqdisplay {
 
         Arduino_DataBus* bus_;
         Arduino_GFX* gfx_;
+        SPIClass* spi_;
 
         int8_t pm_level = -1;
         int8_t CO2_level = -1;
@@ -150,8 +151,6 @@ namespace aqdisplay {
         float temp_level = 0;
         uint8_t rh_level = 0;
         uint8_t fan_level_ = 255;
-
-        uint32_t t_since_start = 0;
 
         bool single_digits = false;
         bool connectivity_shown = false;
@@ -162,7 +161,7 @@ namespace aqdisplay {
         void drawRow(uint8_t row, uint8_t new_level, int8_t prev_level);
         void drawLevel(uint8_t level, uint8_t row, bool flag);
 
-        uint8_t state_ = startup;
+        uint8_t state_ = welcome;
         uint8_t counter_ = 0;
         bool graph_shown_ = false;
 

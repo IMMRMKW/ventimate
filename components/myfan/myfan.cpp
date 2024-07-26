@@ -16,7 +16,6 @@ namespace myfan {
             ledcSetup(fan_pwm_channel_, fan_pwm_frequency_, resolution_);
             ledcAttachPin(fan_pwm_pin_->get_pin(), fan_pwm_channel_);
             ledcWrite(fan_pwm_channel_, 0);
-            Serial.println("here");
 
             power_pwm_pin_->digital_write(true);
         } else {
@@ -30,12 +29,9 @@ namespace myfan {
     {
         Serial.print("Set power: ");
         Serial.println(power);
-        Serial.println(fan_pwm_flag_);
-        Serial.println(power_pwm_channel_);
-        Serial.println(fan_pwm_channel_);
         switch (fan_pwm_flag_) {
         case true:
-            Serial.println("power pwm channel");
+
             if (power == 0) {
                 ledcWrite(fan_pwm_channel_, 0);
             } else {

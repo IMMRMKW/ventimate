@@ -8,6 +8,8 @@ from esphome.const import (
     CONF_INTERRUPT_PIN,
 )
 
+CONF_SCLK_PIN = "sclk_pin"
+CONF_MOSI_PIN = "mosi_pin"
 CONF_CS_PIN = "chip_select_pin"
 CONF_DC_PIN = "dc_pin"
 CONF_RST_PIN = "reset_pin"
@@ -32,7 +34,9 @@ AQDISPLAY = aqdisplay_ns.class_('AQDISPLAY', cg.PollingComponent)
 
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(): cv.declare_id(AQDISPLAY),   
+        cv.GenerateID(): cv.declare_id(AQDISPLAY), 
+        cv.Optional(CONF_SCLK_PIN): cv.All(pins.internal_gpio_input_pin_schema), 
+        cv.Optional(CONF_MOSI_PIN): cv.All(pins.internal_gpio_input_pin_schema), 
         cv.Optional(CONF_CS_PIN): cv.All(pins.internal_gpio_input_pin_schema),
         cv.Optional(CONF_DC_PIN): cv.All(pins.internal_gpio_input_pin_schema),
         cv.Optional(CONF_RST_PIN): cv.All(pins.internal_gpio_input_pin_schema),
@@ -48,11 +52,19 @@ CONFIG_SCHEMA = cv.Schema(
     }).extend(cv.polling_component_schema("1s"))
 
 async def to_code(config):
-    cg.add_library("https://github.com/moononournation/Arduino_GFX","1.4.6")
+    cg.add_library("https://github.com/moononournation/Arduino_GFX","1.4.7")
  
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
 
+    if CONF_SCLK_PIN in config:
+        pin = await cg.gpio_pin_expression(config[CONF_SCLK_PIN])
+        cg.add(var.set_sclk_pin(pin))
+
+    if CONF_MOSI_PIN in config:
+        pin = await cg.gpio_pin_expression(config[CONF_MOSI_PIN])
+        cg.add(var.set_mosi_pin(pin))
+    
     if CONF_CS_PIN in config:
         pin = await cg.gpio_pin_expression(config[CONF_CS_PIN])
         cg.add(var.set_cs_pin(pin))

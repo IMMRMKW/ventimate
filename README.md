@@ -14,6 +14,7 @@
 * Change name of this project
 * Update gitignore file
 * Create gauge card configuration for all sensor values using the AQI class for color limits and the current sensor values for the current readout.
+* Link of GFX library does not point to specific version. This gives an error if the library is updated.
 
 ## Aquality index
 There are loads of different air quality indexes (see, [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index#)).

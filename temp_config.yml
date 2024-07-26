@@ -1,6 +1,6 @@
 esphome:
-  name: esphome_web_79a218
-  friendly_name: Ventimate
+  name: esphome-web-1000000
+  friendly_name: HA Mate
   includes:
     - components/airpurifier/airpurifier.h
 
@@ -31,7 +31,11 @@ wifi:
 
 captive_portal:
 
-##### USB Power Delivery #####
+
+
+
+
+  ##### USB Power Delivery #####
 external_components:
   #- source:
   #    type: git
@@ -50,11 +54,15 @@ external_components:
  #   components: [ my_component1, calibrated_CO2 ] 
  #   refresh: 10s
 
-fusb302:
-  setup_priority: 900
-  maximum_supply_voltage: 9v
-  interrupt_pin: GPIO36
+# fusb302:
+#   setup_priority: 900
+#   maximum_supply_voltage: 9v
+#   interrupt_pin: GPIO36
   
+  
+
+    
+
 ##### Hardware ports #####
 
 # For BME280/BME680 and other retrofitted sensor
@@ -74,10 +82,10 @@ uart:
     baud_rate: 9600
 
 # For MH-Z19C CO2 sensor
-  # - id: MHZ19_uart
-  #   tx_pin: GPIO25
-  #   rx_pin: GPIO26
-  #   baud_rate: 9600
+  - id: MHZ19_uart
+    tx_pin: GPIO25
+    rx_pin: GPIO26
+    baud_rate: 9600
 
 
 
@@ -126,8 +134,7 @@ bme680_bsec:
 
 aqdisplay:
   id: aqmonitor
-  sclk_pin: GPIO18
-  mosi_pin: GPIO23
+  setup_priority: 800
   chip_select_pin: GPIO5
   dc_pin: GPIO19
   reset_pin: GPIO4
@@ -140,6 +147,9 @@ aqdisplay:
   clock: esptime
   network: esp_wifi
 
+
+
+
 airpurifier:
 - platform: myfan
   id: fancyfan
@@ -150,8 +160,8 @@ airpurifier:
   sensor_voc_index: voc_index
   min_voltage: 3.6
   max_voltage: 10
-  purge_interval: 1800
-  purge_duration: 30
+  purge_interval: 14400
+  purge_duration: 7200
   power_sensor:
     name: "Current power"
     id: current_power
@@ -173,7 +183,7 @@ airpurifier:
     min_value: 1
     max_value: 100
     step: 1
-    initial_value: 35
+    initial_value: 100
     optimistic: true
     on_value:
       then:
@@ -309,14 +319,14 @@ sensor:
       name: "PM < 10.0 µm"
       id: pmsx003_pm10
 
-  # - platform: mhz19
-  #   uart_id: MHZ19_uart
-  #   co2:
-  #     name: "MH-Z19 CO2"
-  #   temperature:
-  #     name: "MH-Z19 Temperature"
-  #   update_interval: 60s
-  #   automatic_baseline_calibration: false
+  - platform: mhz19
+    uart_id: MHZ19_uart
+    co2:
+      name: "MH-Z19 CO2"
+    temperature:
+      name: "MH-Z19 Temperature"
+    update_interval: 60s
+    automatic_baseline_calibration: false
     
   # Reports RPM by pulse_counter
   #- platform: pulse_counter
@@ -334,24 +344,24 @@ sensor:
   #  update_interval: 5s
 
 
-light:
-  - platform: neopixelbus
-    type: GRBW
-    variant: SK6812
-    pin: GPIO26
-    num_leds: 12
-    name: "rgb_lights"
-    id: rgb_lights
-    gamma_correct: 1.5
-    on_turn_on:
-      then:
-        - light.turn_on:
-            id: rgb_lights
-            brightness: 100%
-            red: 100%
-            green: 43%
-            blue: 29%
-            white: 100%
+# light:
+#   - platform: neopixelbus
+#     type: GRBW
+#     variant: SK6812
+#     pin: GPIO26
+#     num_leds: 12
+#     name: "rgb_lights"
+#     id: rgb_lights
+#     gamma_correct: 1.5
+#     on_turn_on:
+#       then:
+#         - light.turn_on:
+#             id: rgb_lights
+#             brightness: 100%
+#             red: 100%
+#             green: 43%
+#             blue: 29%
+#             white: 100%
 
 ##### Outputs #####
 

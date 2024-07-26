@@ -31,8 +31,8 @@ namespace airpurifier {
             // Simple controller that determines the required fan power if the airpurifier is on automatic mode.
             int8_t index = calculate_aqi();
             Serial.println(index);
-            /*
             if (index > 0) {
+                // convert milliseconds to seconds
                 float diff_time = float(cur_time - prev_time_) / 1000.0;
 
                 error_Int_ = I_[index] * diff_time + error_Int_;
@@ -40,8 +40,15 @@ namespace airpurifier {
                 error_Int_ = (error_Int_ > max_power_) ? max_power_ : error_Int_;
 
                 float temp = error_Int_ + P_[index];
+
                 power_setpoint = (temp > max_power_) ? max_power_ : temp;
-            }*/
+            }
+            // reset integrator if air quality index is 0
+            if (index == 0) {
+                error_Int_ = 0;
+                power_setpoint = (P_[index] > max_power_) ? max_power_ : P_[index];
+            }
+
             prev_time_ = cur_time;
         } else {
             // If not on automatic mode, simply use max fan power.

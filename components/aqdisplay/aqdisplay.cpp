@@ -6,38 +6,20 @@ namespace aqdisplay {
     void AQDISPLAY::setup()
     {
 
-        bus_ = new Arduino_HWSPI(dc_pin_->get_pin(), cs_pin_->get_pin() /* CS */);
+        spi_ = new SPIClass(VSPI);
+        spi_->begin(sclk_pin_->get_pin(), -1, mosi_pin_->get_pin(), cs_pin_->get_pin());
+        bus_ = new Arduino_HWSPI(dc_pin_->get_pin(), cs_pin_->get_pin(), -1, -1, -1, spi_, false /* CS */);
         gfx_ = new Arduino_SSD1331(bus_, rst_pin_->get_pin() /* RST */, 0 /* rotation */);
-        dc_pin_->pin_mode(gpio::FLAG_OUTPUT);
-        dc_pin_->digital_write(false);
-        delay(1);
-        dc_pin_->digital_write(true);
-
-        gfx_->begin();
-        dc_pin_->pin_mode(gpio::FLAG_OUTPUT);
-        dc_pin_->digital_write(true);
-
+        gfx_->begin(80000000);
         bus_->sendCommand(SSD1331_MASTERCURRENT); // 0x87
         bus_->sendCommand(brightness_);
-
         gfx_->fillScreen(GFX_BLACK);
         gfx_->setTextColor(GFX_WHITE);
-        t_since_start = millis();
     }
 
     void AQDISPLAY::update()
     {
         switch (state_) {
-        case startup: {
-            /*if (millis() - t_since_start > 1000) {
-                dc_pin_->digital_write(false);
-                delay(1);
-                dc_pin_->digital_write(true);
-                state_ = welcome;
-            }*/
-            state_ = welcome;
-            break;
-        }
         case welcome: {
             gfx_->draw16bitRGBBitmap(0, 0, bitmap_welcome, 96, 64);
             counter_++;
@@ -74,13 +56,17 @@ namespace aqdisplay {
             }
 
             if (sensor_co2_index_) {
-                uint8_t index = (uint8_t)sensor_co2_index_->get_state();
-                setCO2(index);
+                if (!isnan(sensor_co2_index_->get_state())) {
+                    uint8_t index = (uint8_t)sensor_co2_index_->get_state();
+                    setCO2(index);
+                }
             }
 
             if (sensor_pm_index_) {
-                uint8_t index = (uint8_t)sensor_pm_index_->get_state();
-                setPM(index);
+                if (!isnan(sensor_pm_index_->get_state())) {
+                    uint8_t index = (uint8_t)sensor_pm_index_->get_state();
+                    setPM(index);
+                }
             }
 
             if (sensor_temp_) {
@@ -105,8 +91,10 @@ namespace aqdisplay {
             }
 
             if (sensor_voc_index_) {
-                uint8_t index = (uint8_t)sensor_voc_index_->get_state();
-                setVOC(index);
+                if (!isnan(sensor_voc_index_->get_state())) {
+                    uint8_t index = (uint8_t)sensor_voc_index_->get_state();
+                    setVOC(index);
+                }
             }
 
             if (sensor_power_) {
@@ -190,10 +178,12 @@ namespace aqdisplay {
         gfx_->setFont();
         fill_textBounds_with_black("88:88", x, y, &x_bounds, &y_bounds, &w, &h);
         gfx_->setCursor(0, 0);
-        char str[6];
-        time_t timeStamp = current_time.timestamp;
-        strftime(str, sizeof(str), "%H:%M", localtime(&timeStamp));
-        gfx_->print(str);
+        if (current_time.year != 1970) {
+            char str[6];
+            time_t timeStamp = current_time.timestamp;
+            strftime(str, sizeof(str), "%H:%M", localtime(&timeStamp));
+            gfx_->print(str);
+        }
     }
 
     void AQDISPLAY::setConnectivity(uint8_t connect)
