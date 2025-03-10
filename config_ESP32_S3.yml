@@ -1,11 +1,10 @@
 esphome:
-  name: esphome_web_79a218
+  name: eps32s3ventimate
   friendly_name: Ventimate
-  includes:
-    - components/airpurifier/airpurifier.h
 
 esp32:
-  board: esp32dev
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
   framework:
     type: arduino
 
@@ -18,6 +17,7 @@ api:
     key: "Hcbp/oa8VWQlhAf43Wk14DNFKqqNPyOP2ZOKlPQNpNg="
 
 ota:
+  - platform: esphome
 
 wifi:
   id: esp_wifi
@@ -33,16 +33,16 @@ captive_portal:
 
 ##### USB Power Delivery #####
 external_components:
-  #- source:
-  #    type: git
-  #    url: https://github.com/IMMRMKW/esphome-usb-powerdelivery.git
-  #    ref: main
-  #  components: fusb302
-  #  refresh: 10s
+  - source:
+      type: git
+      url: https://github.com/IMMRMKW/esphome-usb-powerdelivery.git
+      ref: main
+    components: fusb302
+    refresh: 10s
   - source:
       type: local
       path: components
-      #components: [ my_component1, calibrated_CO2 ]
+    components: [airpurifier, aqdisplay, aqi, myfan]
  # - source:
  #     type: git
  #     url: https://github.com/IMMRMKW/my_component1.git
@@ -52,24 +52,21 @@ external_components:
 
 fusb302:
   maximum_supply_voltage: 9v
-  interrupt_pin: GPIO36
+  interrupt_pin: GPIO16
+  
   
 ##### Hardware ports #####
 
 # For BME280/BME680 and other retrofitted sensor
 i2c:
-
-# For OLED display
-#spi:
-#  clk_pin: GPIO18
-#  mosi_pin: GPIO23
-
+  sda: GPIO2
+  scl: GPIO1
 
 uart:
 # For PMS5003 particle sensor
   - id: PMS_uart
-    tx_pin: GPIO17
-    rx_pin: GPIO16
+    tx_pin: GPIO43
+    rx_pin: GPIO44
     baud_rate: 9600
 
 # For MH-Z19C CO2 sensor
@@ -78,58 +75,22 @@ uart:
   #   rx_pin: GPIO26
   #   baud_rate: 9600
 
-
-
 ##### Sensors #####
 
-bme680_bsec:
-    # i2c address
-    # -----------
-    # Common values are:
-    # - 0x76
-    # - 0x77
-    # Default: 0x76
-    address: 0x77
-
-    # Temperature offset
-    # ------------------
-    # Useful if device is in enclosure and reads too high
-    # Default: 0
-    temperature_offset: 0
-
-    # IAQ calculation mode
-    # --------------------
-    # Available options:
-    # - static (for fixed position devices)
-    # - mobile (for on person or other moveable devices)
-    # Default: static
-    iaq_mode: static
-
-    # Sample rate
-    # -----------
-    # This controls the sampling rate for gas-dependant sensors and will govern the interval
-    # at which the sensor heater is operated.
-    # By default this rate will also be used for temperature, pressure and humidity sensors
-    # but these can be overridden on a per-sensor level if required.
-    #
-    # Available options:
-    # - lp (low power - samples every 3 seconds)
-    # - ulp (ultra low power - samples every 5 minutes)
-    # Default: lp
-    sample_rate: lp
-
-    # Interval at which to save BSEC state
-    # ------------------------------------
-    # Default: 6h
-    state_save_interval: 6h
+bme68x_bsec2_i2c:
+  address: 0x77
+  model: bme680
+  operating_age: 28d
+  sample_rate: LP
+  supply_voltage: 3.3V
 
 aqdisplay:
   id: aqmonitor
-  sclk_pin: GPIO18
-  mosi_pin: GPIO23
-  chip_select_pin: GPIO5
-  dc_pin: GPIO19
-  reset_pin: GPIO4
+  sclk_pin: GPIO12
+  mosi_pin: GPIO11
+  chip_select_pin: GPIO10
+  dc_pin: GPIO13
+  reset_pin: GPIO14
   sensor_co2_index: co2_index
   sensor_pm_index: pm_index
   sensor_voc_index: voc_index
@@ -140,63 +101,55 @@ aqdisplay:
   network: esp_wifi
 
 airpurifier:
-- platform: myfan
-  id: fancyfan
-  power_enable_pin: GPIO33
-  power_pwm_pin: GPIO2
-  fan_pwm_pin: GPIO32
-  sensor_pm_index: pm_index
-  sensor_voc_index: voc_index
-  min_voltage: 3.6
-  max_voltage: 10
-  purge_interval: 1800
-  purge_duration: 30
-  power_sensor:
-    name: "Current power"
-    id: current_power
-  switcher:
-    name: "manual/auto"
-    id: myfanSwitch
-    optimistic: true
-    on_turn_on:
-      then:
-        - lambda: |-
-            id(fancyfan).set_manual(true);
-    on_turn_off:
-      then:
-        - lambda: |-
-            id(fancyfan).set_manual(false);
-  max_pwm:
-    name: "Max power"
-    id: myfanSlider
-    min_value: 1
-    max_value: 100
-    step: 1
-    initial_value: 35
-    optimistic: true
-    on_value:
-      then:
-        - lambda: |-
-            id(fancyfan).set_max_power(x); 
+  - platform: myfan
+    id: fancyfan
+    power_enable_pin: GPIO34
+    power_pwm_pin: GPIO33
+    fan_pwm_pin: GPIO21
+    sensor_pm_index: pm_index
+    sensor_voc_index: voc_index
+    min_voltage: 3.6
+    max_voltage: 10
+    purge_interval: 1800
+    purge_duration: 30
+    power_sensor:
+      name: "Current power"
+      id: current_power
+    switcher:
+      name: "manual/auto"
+      id: myfanSwitch
+      optimistic: true
+      on_turn_on:
+        then:
+          - lambda: |-
+              id(fancyfan).set_manual(true);
+      on_turn_off:
+        then:
+          - lambda: |-
+              id(fancyfan).set_manual(false);
+    max_pwm:
+      name: "Max power"
+      id: myfanSlider
+      min_value: 0
+      max_value: 100
+      step: 1
+      initial_value: 35
+      optimistic: true
+      on_value:
+        then:
+          - lambda: |-
+              id(fancyfan).set_max_power(x); 
+
+
+
                
 switch:
   - platform: gpio
     pin: 
-      number: GPIO12
+      number: GPIO9
     id: pms_set
     name: "Start measuring PM concentrations"
     internal: true # Don't expose this switch to enable manually
-
-
-  #override:
-  #switch:
-  #  id: relay
-  #  - platform: override_switch
-  #
-  # sensor_iaq: iaq
-  #  sensor_pm_1_0: pmsx003_pm01
-  #  sensor_pm_2_5: pmsx003_pm25
-  #  sensor_pm_10: pmsx003_pm10
 
 sensor:
   - platform: aqi
@@ -227,52 +180,44 @@ sensor:
   #    name: "calibrated_CO2"
   #    id: CO2
 
-  - platform: bme680_bsec
+  - platform: bme68x_bsec2
     temperature:
-      # Temperature in °C
       name: "BME680 Temperature"
       id: bme680_temperature
       sample_rate: lp
       filters:
         - median
     pressure:
-      # Pressure in hPa
       name: "BME680 Pressure"
       id: bme680_pressure
       sample_rate: lp
       filters:
         - median
     humidity:
-      # Relative humidity %
       name: "BME680 Humidity"
       id: bme680_humidity
       sample_rate: lp
       filters:
         - median
     gas_resistance:
-      # Gas resistance in Ω
       name: "BME680 Gas Resistance"
       internal: true
       filters:
         - median
     iaq:
-      # Indoor air quality value
       name: "BME680 IAQ"
       id: iaq
       filters:
         - median
     iaq_accuracy:
-      # IAQ accuracy as a numeric value of 0, 1, 2, 3
       name: "BME680 Numeric IAQ Accuracy"
       internal: true
     co2_equivalent:
-      # CO2 equivalent estimate in ppm
       name: "BME680 CO2 Equivalent"
       internal: true
       filters:
         - median
     breath_voc_equivalent:
-      # Volatile organic compounds equivalent estimate in ppm
       id: bvoc
       name: "BME680 Breath VOC Equivalent"
       internal: false
@@ -292,8 +237,6 @@ sensor:
     co2: 
       name: SCD4x CO2
       id: scd4x_co2
-
-      
 
   - platform: pmsx003
     uart_id: PMS_uart
@@ -317,27 +260,11 @@ sensor:
   #   update_interval: 60s
   #   automatic_baseline_calibration: false
     
-  # Reports RPM by pulse_counter
-  #- platform: pulse_counter
-  #  pin: GPIO34
-  #  name: Fan Speed
-  #  unit_of_measurement: 'RPM'
-  #  filters:
-  #    - multiply: 0.5
-      #- lambda: |-
-      #    if (x <= 1500) return x;
-      #    else return {};
-  #  count_mode:
-  #    rising_edge: INCREMENT
-  #    falling_edge: DISABLE
-  #  update_interval: 5s
-
-
 light:
   - platform: neopixelbus
     type: GRBW
     variant: SK6812
-    pin: GPIO26
+    pin: GPIO42
     num_leds: 12
     name: "rgb_lights"
     id: rgb_lights
@@ -358,34 +285,13 @@ output:
   # Heartbeat status LED
   - platform: gpio
     id: statusLED
-    pin: GPIO27
-
-
-##### Visualization #####
-
-
-
-      
-
-# color:
-#   - id: color_white
-#     hex: ffffff
-#   - id: color_green
-#     hex: 7cfc00
-#   - id: color_orange
-#     hex: ffd000
-#   - id: color_red
-#     hex: bc3a3a
+    pin: GPIO5
 
 ##### General #####
 
 time:
   - platform: homeassistant
     id: esptime
-
-
-
-
 
 interval:
   - interval: 120s
@@ -398,6 +304,8 @@ interval:
       - output.turn_on: statusLED
       - delay: 500ms
       - output.turn_off: statusLED
+
+
 
     
     

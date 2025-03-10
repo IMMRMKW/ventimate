@@ -1,11 +1,11 @@
-#include "myfan.h"
+#include "ventimate.h"
 #include "esphome/core/application.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
-namespace myfan {
-    static const char* const TAG = "myfan";
-    void MYFAN::setup()
+namespace ventimate {
+    static const char* const TAG = "ventimate";
+    void VENTIMATE::setup()
     {
         power_en_pin_->pin_mode(gpio::FLAG_OUTPUT);
         power_en_pin_->digital_write(true);
@@ -25,7 +25,7 @@ namespace myfan {
         }
     }
 
-    void MYFAN::set_power(uint8_t power)
+    void VENTIMATE::set_power(uint8_t power)
     {
         Serial.print("Set power: ");
         Serial.println(power);
@@ -53,14 +53,14 @@ namespace myfan {
         }
     }
 
-    float MYFAN::voltage_setpoint(float min_voltage, float max_voltage, uint8_t power)
+    float VENTIMATE::voltage_setpoint(float min_voltage, float max_voltage, uint8_t power)
     {
         Serial.print("Voltage setpoint ");
         Serial.println(min_voltage_ + ((float)power / 100) * (max_voltage_ - min_voltage_));
         return min_voltage_ + ((float)power / 100) * (max_voltage_ - min_voltage_);
     }
 
-    void MYFAN::dump_config()
+    void VENTIMATE::dump_config()
     {
         Serial.println("Number changed");
     }

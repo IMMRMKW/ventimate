@@ -1,15 +1,15 @@
 #pragma once
 #include "Arduino.h"
-#include "airpurifier.h"
+#include "esphome/components/airpurifier/airpurifier.h"
 #include "esphome/components/switch/switch.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 
 namespace esphome {
-namespace myfan {
+namespace ventimate {
 
     /**
-     * @class MYFAN
+     * @class VENTIMATE
      * @brief A class that extends the airpurifier class. It is the physical implementation of the airpurifier so to say.
      * @todo document all one-liner functions (set/get) and class variables
      * @todo Think of new name!
@@ -18,7 +18,7 @@ namespace myfan {
      * @todo create doxygen documentation for all class functions in .cpp file.
      */
 
-    class MYFAN : public airpurifier::AIRPURIFIER {
+    class VENTIMATE : public airpurifier::AIRPURIFIER {
     public:
         void setup() override;
         void set_power_en_pin(InternalGPIOPin* pin) { this->power_en_pin_ = pin; }
@@ -58,5 +58,5 @@ namespace myfan {
         InternalGPIOPin* tacho_pin_ { nullptr };
     };
 
-} // namespace myfan
+} // namespace ventimate
 } // namespace esphome

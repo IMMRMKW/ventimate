@@ -5,8 +5,12 @@ namespace aqdisplay {
 
     void AQDISPLAY::setup()
     {
-
+#ifdef USE_ESP32_VARIANT_ESP32
         spi_ = new SPIClass(VSPI);
+#endif
+#ifdef USE_ESP32_VARIANT_ESP32S3
+        spi_ = new SPIClass(SPI);
+#endif
         spi_->begin(sclk_pin_->get_pin(), -1, mosi_pin_->get_pin(), cs_pin_->get_pin());
         bus_ = new Arduino_HWSPI(dc_pin_->get_pin(), cs_pin_->get_pin(), -1, -1, -1, spi_, false /* CS */);
         gfx_ = new Arduino_SSD1331(bus_, rst_pin_->get_pin() /* RST */, 0 /* rotation */);

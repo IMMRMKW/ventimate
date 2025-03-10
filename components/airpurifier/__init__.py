@@ -19,6 +19,7 @@ from esphome.const import (
 )
 
 IS_PLATFORM_COMPONENT = True
+
 AUTO_LOAD = ["switch", "number"]
 
 CONF_SENSOR_VOC_INDEX = "sensor_voc_index"
@@ -42,7 +43,7 @@ AIRPURIFIER = airpurifier_ns.class_('AIRPURIFIER', cg.PollingComponent)
 
 
 
-CONFIG_SCHEMA = cv.Schema({
+AIRPURIFIER_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(AIRPURIFIER),
     cv.Required(CONF_POWER_SENSOR): sensor.sensor_schema(
                 unit_of_measurement=UNIT_PERCENT,
@@ -68,7 +69,7 @@ CONFIG_SCHEMA = cv.Schema({
 
 
 async def setup_airpurifier_core_(var, config):
-    
+
     if CONF_SENSOR_VOC_INDEX in config:
         sens = await cg.get_variable(config[CONF_SENSOR_VOC_INDEX])
         cg.add(var.set_sensor_voc_index(sens))
@@ -82,7 +83,7 @@ async def setup_airpurifier_core_(var, config):
         cg.add(var.set_sensor_co2_index(sens))
 
     if CONF_POWER_SENSOR in config:
-        sens = await sensor.new_sensor(config[CONF_POWER_SENSOR])
+        sens = await sensor.new_sensor(config[CONF_POWER_SENSOR]) 
         cg.add(var.set_sensor_power(sens))
     
     if CONF_USE_PURGE in config:

@@ -7,9 +7,8 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
-import esphome.components.airpurifier as ap
 
-from esphome import components
+from esphome.components import airpurifier as ap
 #from airpurifier import CONFIG_SCHEMA
 from esphome.const import (
     CONF_ID,
@@ -26,14 +25,16 @@ CONF_MIN_VOLTAGE = "min_voltage"
 CONF_FAN_PWM_FREQUENCY = "fan_pwm_frequency"
 CONF_MIN_DUTY_CYCLE = "min_duty_cycle"
 
-myfan_ns = cg.esphome_ns.namespace('myfan')
-MYFAN = myfan_ns.class_('MYFAN', cg.Component)
+ventimate_ns = cg.esphome_ns.namespace('ventimate')
+VENTIMATE = ventimate_ns.class_('VENTIMATE', ap.AIRPURIFIER)
 
 AUTO_LOAD = ["airpurifier"]
 
-CONFIG_SCHEMA = ap.CONFIG_SCHEMA.extend(cv.Schema(
+
+
+CONFIG_SCHEMA = ap.AIRPURIFIER_SCHEMA.extend(cv.Schema(
     {
-    cv.GenerateID(): cv.declare_id(MYFAN),
+    cv.GenerateID(): cv.declare_id(VENTIMATE),
     cv.Optional(CONF_POWER_EN_PIN): cv.All(pins.internal_gpio_input_pin_schema),
     cv.Optional(CONF_POWER_PWM_PIN): cv.All(pins.internal_gpio_input_pin_schema),
     cv.Optional(CONF_FAN_PWM_PIN): cv.All(pins.internal_gpio_input_pin_schema),

@@ -52,7 +52,7 @@ CONFIG_SCHEMA = cv.Schema(
     }).extend(cv.polling_component_schema("1s"))
 
 async def to_code(config):
-    cg.add_library("https://github.com/moononournation/Arduino_GFX","1.4.7")
+    cg.add_library("https://github.com/moononournation/Arduino_GFX","1.5.5")
  
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
