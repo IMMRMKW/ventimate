@@ -35,7 +35,7 @@
 *.app
 
 # files
-# secrets.yaml
+secrets.yaml
 
 # folders
 __pycache__/
