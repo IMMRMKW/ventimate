@@ -14,7 +14,7 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "Hcbp/oa8VWQlhAf43Wk14DNFKqqNPyOP2ZOKlPQNpNg="
+    key: !secret ha_api_key
 
 ota:
   - platform: esphome
@@ -26,8 +26,8 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Esphome-Web-79A218"
-    password: "bJhPXchn93Ux"
+    ssid: !secret ap_ssid
+    password: !secret ap_password
 
 captive_portal:
 
@@ -69,6 +69,7 @@ uart:
     rx_pin: GPIO44
     baud_rate: 9600
 
+# Uncomment when using MH-Z19C CO2 sensor or similar.
 # For MH-Z19C CO2 sensor
   # - id: MHZ19_uart
   #   tx_pin: GPIO25

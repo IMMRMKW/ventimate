@@ -21,6 +21,9 @@
         {
             "name": "AQ_display_test",
             "path": "../../OneDrive/Documents/PlatformIO/Projects/AQ_display_test"
+        },
+        {
+            "path": "../calibrated_CO2"
         }
     ],
     "settings": {
