@@ -1,5 +1,5 @@
 # Ventimate
-An esphome configuration that turns your (HA Mate)[https://immrmkw.github.io/HA_Mate/] in an airpurifier.
+An esphome configuration that turns your [HA Mate](https://immrmkw.github.io/HA_Mate/) in an airpurifier.
 
 ## How to install
 There are several methods to install ESPHome on your board. If you have Home Assistant with the ESPHome Device Builder addon already installed, [this](#install-using-home-assistant) may be the easiest option for you. If you are already acquinted with Python, uploading a configuration [this way](#install-using-python-and-esphome) is fairly easy as well. In all cases, [add the ESPHome integration](https://www.home-assistant.io/integrations/esphome/) to Home Assistant.
