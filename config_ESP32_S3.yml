@@ -26,8 +26,8 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: !secret ap_ssid
-    password: !secret ap_password
+    ssid: "Ventimate"
+    password: "your_password"
 
 captive_portal:
 
