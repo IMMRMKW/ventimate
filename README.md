@@ -1,79 +1,28 @@
-# my_component1
-## Todo
-* Create a platform component for power delivery
-	- For now, it should only have sink capability, with multiple voltage setpoints
-	- Create a sensor such that actual voltage is available within your ESPHome configuration
-	- The FUSB302, __init__.py should be empty, code should be moved to power_delivery.py
-	- Ensure the priority of FUSB302 is set automatically if it is not explicitly set in the configuration yaml file.
-* Create a complete yaml configuration that shows the working of the project
-	- Find out how to discard the name of the ESPHome device in front of each sensor. This clutters the Home assistant view
-* Find out how to use ESPHome stand alone
-	- Create a tutorial on how to do this
-* Change name of MyFan
-	- Think of something!
-* Change name of this project
-* Update gitignore file
-* Create gauge card configuration for all sensor values using the AQI class for color limits and the current sensor values for the current readout.
-* Link of GFX library does not point to specific version. This gives an error if the library is updated.
+# Ventimate
+An esphome configuration that turns your (HA Mate)[https://immrmkw.github.io/HA_Mate/] in an airpurifier.
 
-## Aquality index
-There are loads of different air quality indexes (see, [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index#)).
-[this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8876806/) has a measure for safe levels of VOCs.
+## How to install
+There are several methods to install ESPHome on your board. If you have Home Assistant with the ESPHome Device Builder addon already installed, [this](#install-using-home-assistant) may be the easiest option for you. If you are already acquinted with Python, uploading a configuration [this way](#install-using-python-and-esphome) is fairly easy as well. In all cases, 
+### Install using Home Assistant
+- Connect the HA Mate to your laptop/computer using a USB cable.
+- Go to [web.esphome.io](https://web.esphome.io/).
+- Click *connect*
+- Select the correct COM-port. Hint: the port will probably be named something like *USB JTAG/serial debug unit (COM1)*. Where the *1* can be any number depending on the number of similar devices you used in the past.
+- Click *Prepare for first use*
+- Follow the steps on the screen. If after the installation, the following error appears, `An error occured. Improv Wi-Fi Serial not detected`, press the reset button on your HA Mate, and restart the procedure.
+- Click *Connect to Wi-Fi*, and enter your credentials.
+- Now open the *ESPHome Device Builder* addon, or ESPHome builder for short, on your Home Assistant page.
+- If everything went correctly, ESPHome builder automatically detected a new device connected to the network. This is indicated on the top of the screen. Click *Show*.
+- A new ESPHome device will appear in the screen. Click *Take control*.
+- Do not give your ESPHome device a new name. Just click *Take Control* again.
+- In the next step, click *Skip*.
+- Then click *Close*.
+- Now the panel of your ESPHome device has a new button named *EDIT*. Click it. A new window with YAML code for your ESPHome configuration appears.
+- Copy-paste the YAML code of the file `config_ESP32_S3.yml` to this window. Click 'Save'
+- Now, you should ensure that the credentials of your wifi, access point, and your Home Assistant API key are known to your configuration. There are two options for this:
+    1. You can use the file editor addon. If you do not have it, you can [install it](https://www.home-assistant.io/common-tasks/os/#:~:text=To%20install%20and%20use%20the%20File%20Editor%20in%20Home%20Assistant,files%20within%20your%20%2Fconfig%20directory.). Your Home Assistant folder will have a file called *secrets.yaml*, just like this repository. Copy-paste the contents of the file of this repository to the file of your Home Assistant. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
+    2. Simply type your credentials and keys in the configuration file behind the keyword surrounded by "".
+- Go back to ESPHome builder and click *UPDATE*
 
 
-
-## Uploading this project to your esp32
-### Manually, using, e.g., VSCode
-* Create a project folder in VSCode to which you clone this github project.
-* Next, using the terminal, create a virtual environment in this folder:
-```bash
-python -m venv .venv
-```
-* Activate your virtual environment using:
-``` bash
- .\.venv\Scripts\activate
-```
-* First, install wheel:
-``` bash
-pip install wheel 
-```
-* Next, install esphome:
-``` bash
-pip install esphome 
-```
-* You can upload the code using:
-``` bash
-esphome run config.yml --device COM1
-```
-Where the '1' behind 'COM' should be replaced by the actual COM port number of your device.
-
-### Via Home Assistant
-### Via your browser
-https://web.esphome.io/
-### Locally via USB
-## Inserting fan art (pun intended) in your fan
-Insert explanation of how to include fan art
-## Creating gauge cards indicating air quality index
-[converting 16 bit colors to 24 bit colors](https://stackoverflow.com/questions/2442576/how-does-one-convert-16-bit-rgb565-to-24-bit-rgb888) and [vice versa](https://greekgeeks.net/#maker-tools_convertColor)
-
-```yaml
-type: gauge
-entity: sensor.esphome_web_79a218_pm_2_5_m
-needle: true
-min: 0
-max: 300
-segments:
-  - from: 0
-    color: '#009600'
-  - from: 12
-    color: '#8CC600'
-  - from: 35
-    color: '#FFEF00'
-  - from: 55
-    color: '#FFB200'
-  - from: 150
-    color: '#F79600'
-  - from: 250
-    color: '#FF0000'
-```
-
+### Install using Python and ESPhome

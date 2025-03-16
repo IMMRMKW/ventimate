@@ -45,7 +45,7 @@ external_components:
     components: [airpurifier, aqdisplay, aqi, myfan]
  # - source:
  #     type: git
- #     url: https://github.com/IMMRMKW/my_component1.git
+ #     url: https://github.com/IMMRMKW/ventimate
  #     ref: main
  #   components: [ my_component1, calibrated_CO2 ] 
  #   refresh: 10s
@@ -173,14 +173,6 @@ sensor:
      id: voc_index
      internal: true
 
-  #- platform: calibrated_CO2
-  #  sensor: scd4x_co2
-  #  default_outdoor_co2: 425
-  #  get_co2_online: True
-  #  co2: 
-  #    name: "calibrated_CO2"
-  #    id: CO2
-
   - platform: bme68x_bsec2
     temperature:
       name: "BME680 Temperature"
@@ -300,11 +292,11 @@ interval:
       - switch.turn_on: pms_set
       - delay: 20s
       - switch.turn_off: pms_set
-  - interval: 1000ms
-    then:
-      - output.turn_on: statusLED
-      - delay: 500ms
-      - output.turn_off: statusLED
+  # - interval: 1000ms
+  #   then:
+  #     - output.turn_on: statusLED
+  #     - delay: 500ms
+  #     - output.turn_off: statusLED
 
 
 
