@@ -36,6 +36,7 @@
 
 # files
 secrets.yaml
+secrets.yml
 
 # folders
 __pycache__/
