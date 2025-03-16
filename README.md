@@ -21,7 +21,17 @@ There are several methods to install ESPHome on your board. If you have Home Ass
 - Copy-paste the YAML code of the file `config_ESP32_S3.yml` to this window. Click 'Save'.
 - Now, you should ensure that the credentials of your wifi and your Home Assistant API key are known to your configuration. There are two options for this:
     1. You can use the file editor addon. If you do not have it, you can [install it](https://www.home-assistant.io/common-tasks/os/#:~:text=To%20install%20and%20use%20the%20File%20Editor%20in%20Home%20Assistant,files%20within%20your%20%2Fconfig%20directory.). Your Home Assistant folder will have a file called *secrets.yaml*. Copy-paste the contents of the *secrets_example.yml* to *secrets.yaml* on your Home Assistant. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
-    2. Simply type your credentials and keys in the configuration file behind the keyword surrounded by "".
+    2. Simply type your credentials and API key in the configuration file:
+    ```
+    api:
+      encryption:
+      key: "your key"
+
+    wifi:
+      id: esp_wifi
+      ssid: "your_wifi_ssid"
+      password: "your_wifi_password"
+    ```
 - Go back to ESPHome builder and click *UPDATE*
 
 

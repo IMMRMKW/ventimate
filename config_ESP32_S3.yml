@@ -11,13 +11,13 @@ esp32:
 # Enable logging
 logger:
 
+ota:
+  - platform: esphome
+
 # Enable Home Assistant API
 api:
   encryption:
     key: !secret ha_api_key
-
-ota:
-  - platform: esphome
 
 wifi:
   id: esp_wifi
