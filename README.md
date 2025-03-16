@@ -40,8 +40,8 @@ This method requires you to have installed [Python](https://www.python.org/downl
 - Navigate to the folder where you want to clone the project.
 - In this folder, open a terminal.
 - Type `git clone git@github.com:IMMRMKW/ventimate.git`
-- Navigate to the folder containing the project.
-- In this folder, create a virtual environment using `python -m venv`
+- Still using the terminal, navigate to the folder containing the cloned project.
+- In this folder, create a virtual environment by using `python -m venv`.
 - Start the virtual environment using `.\.venv\Scripts\activate`
 - Install ESPHome using `pip install esphome`
 - Connect the HA Mate to your laptop/computer using a USB cable.
