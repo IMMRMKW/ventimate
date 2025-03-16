@@ -39,16 +39,16 @@ external_components:
       ref: main
     components: fusb302
     refresh: 10s
+  # - source:
+  #     type: local
+  #     path: components
+  #   components: [airpurifier, aqdisplay, aqi, myfan]
   - source:
-      type: local
-      path: components
-    components: [airpurifier, aqdisplay, aqi, myfan]
- # - source:
- #     type: git
- #     url: https://github.com/IMMRMKW/ventimate
- #     ref: main
- #   components: [ my_component1, calibrated_CO2 ] 
- #   refresh: 10s
+      type: git
+      url: https://github.com/IMMRMKW/ventimate.git
+      ref: main
+    components: [airpurifier, aqdisplay, aqi, myfan] 
+    refresh: 10s
 
 fusb302:
   maximum_supply_voltage: 9v
@@ -102,7 +102,7 @@ aqdisplay:
   network: esp_wifi
 
 airpurifier:
-  - platform: myfan
+  - platform: ventimate
     id: fancyfan
     power_enable_pin: GPIO34
     power_pwm_pin: GPIO33

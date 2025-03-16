@@ -26,3 +26,16 @@ There are several methods to install ESPHome on your board. If you have Home Ass
 
 
 ### Install using Python and ESPhome
+This method requires you to have installed [Python](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads)
+- Navigate to the folder where you want to clone the project.
+- In this folder, open a terminal.
+- Type `git clone git@github.com:IMMRMKW/ventimate.git`
+- Navigate to the folder containing the project.
+- In this folder, create a virtual environment using `python -m venv`
+- Start the virtual environment using `.\.venv\Scripts\activate`
+- Install ESPHome using `pip install esphome`
+- Connect the HA Mate to your laptop/computer using a USB cable.
+- Note down the number of the COM port that is assigned to the HA Mate.
+- In your terminal, type `esphome run config_ESP32_S3.yml --device COM<number>`. Replace <number> with the number that is assigned to the COM port of your HA Mate. Press Enter.
+
+The configuration should now be compiled an be uploaded to your HA Mate.
