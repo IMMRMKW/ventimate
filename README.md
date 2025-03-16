@@ -18,9 +18,9 @@ There are several methods to install ESPHome on your board. If you have Home Ass
 - In the next step, click *Skip*.
 - Then click *Close*.
 - Now the panel of your ESPHome device has a new button named *EDIT*. Click it. A new window with YAML code for your ESPHome configuration appears.
-- Copy-paste the YAML code of the file `config_ESP32_S3.yml` to this window. Click 'Save'
-- Now, you should ensure that the credentials of your wifi, access point, and your Home Assistant API key are known to your configuration. There are two options for this:
-    1. You can use the file editor addon. If you do not have it, you can [install it](https://www.home-assistant.io/common-tasks/os/#:~:text=To%20install%20and%20use%20the%20File%20Editor%20in%20Home%20Assistant,files%20within%20your%20%2Fconfig%20directory.). Your Home Assistant folder will have a file called *secrets.yaml*, just like this repository. Copy-paste the contents of the file of this repository to the file of your Home Assistant. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
+- Copy-paste the YAML code of the file `config_ESP32_S3.yml` to this window. Click 'Save'.
+- Now, you should ensure that the credentials of your wifi and your Home Assistant API key are known to your configuration. There are two options for this:
+    1. You can use the file editor addon. If you do not have it, you can [install it](https://www.home-assistant.io/common-tasks/os/#:~:text=To%20install%20and%20use%20the%20File%20Editor%20in%20Home%20Assistant,files%20within%20your%20%2Fconfig%20directory.). Your Home Assistant folder will have a file called *secrets.yaml*. Copy-paste the contents of the *secrets_example.yml* to *secrets.yaml* on your Home Assistant. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
     2. Simply type your credentials and keys in the configuration file behind the keyword surrounded by "".
 - Go back to ESPHome builder and click *UPDATE*
 
@@ -36,6 +36,7 @@ This method requires you to have installed [Python](https://www.python.org/downl
 - Install ESPHome using `pip install esphome`
 - Connect the HA Mate to your laptop/computer using a USB cable.
 - Note down the number of the COM port that is assigned to the HA Mate.
+- In the *ventimate* folder, create a file called *secrets.yml*. Copy-paste the contents of *secrets_example.yml* to the new file. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
 - In your terminal, type `esphome run config_ESP32_S3.yml --device COM<number>`. Replace <number> with the number that is assigned to the COM port of your HA Mate. Press Enter.
 
 The configuration should now be compiled an be uploaded to your HA Mate.
