@@ -111,7 +111,7 @@ airpurifier:
     sensor_pm_index: pm_index
     sensor_voc_index: voc_index
     min_voltage: 3.6
-    max_voltage: 12
+    max_voltage: 10
     purge_interval: 1800
     purge_duration: 30
     power_sensor:
