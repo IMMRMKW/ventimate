@@ -42,17 +42,18 @@ external_components:
   # - source:
   #     type: local
   #     path: components
-  #   components: [airpurifier, aqdisplay, aqi, myfan]
+  #   components: [airpurifier, aqdisplay, aqi, ventimate]
   - source:
       type: git
       url: https://github.com/IMMRMKW/ventimate.git
       ref: main
-    components: [airpurifier, aqdisplay, aqi, myfan] 
+    components: [airpurifier, aqdisplay, aqi, ventimate] 
     refresh: 10s
 
 fusb302:
   maximum_supply_voltage: 9v
   interrupt_pin: GPIO16
+  setup_priority: 900
   
   
 ##### Hardware ports #####
@@ -103,14 +104,14 @@ aqdisplay:
 
 airpurifier:
   - platform: ventimate
-    id: fancyfan
+    id: fancy_fan
     power_enable_pin: GPIO34
     power_pwm_pin: GPIO33
     fan_pwm_pin: GPIO21
     sensor_pm_index: pm_index
     sensor_voc_index: voc_index
     min_voltage: 3.6
-    max_voltage: 10
+    max_voltage: 12
     purge_interval: 1800
     purge_duration: 30
     power_sensor:
@@ -123,11 +124,11 @@ airpurifier:
       on_turn_on:
         then:
           - lambda: |-
-              id(fancyfan).set_manual(true);
+              id(fancy_fan).set_manual(true);
       on_turn_off:
         then:
           - lambda: |-
-              id(fancyfan).set_manual(false);
+              id(fancy_fan).set_manual(false);
     max_pwm:
       name: "Max power"
       id: myfanSlider
@@ -139,7 +140,7 @@ airpurifier:
       on_value:
         then:
           - lambda: |-
-              id(fancyfan).set_max_power(x); 
+              id(fancy_fan).set_max_power(x); 
 
 
 

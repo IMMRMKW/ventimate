@@ -17,6 +17,7 @@ api:
     key: "Hcbp/oa8VWQlhAf43Wk14DNFKqqNPyOP2ZOKlPQNpNg="
 
 ota:
+  - platform: esphome
 
 wifi:
   id: esp_wifi
@@ -32,16 +33,16 @@ captive_portal:
 
 ##### USB Power Delivery #####
 external_components:
-  #- source:
+  # - source:
   #    type: git
   #    url: https://github.com/IMMRMKW/esphome-usb-powerdelivery.git
   #    ref: main
-  #  components: fusb302
-  #  refresh: 10s
+  #   components: fusb302
+  #   refresh: 10s
   - source:
       type: local
       path: components
-      #components: [ my_component1, calibrated_CO2 ]
+    components: [ airpurifier, aqdisplay, aqi, ventimate, fusb302 ]
  # - source:
  #     type: git
  #     url: https://github.com/IMMRMKW/my_component1.git
@@ -52,11 +53,14 @@ external_components:
 fusb302:
   maximum_supply_voltage: 9v
   interrupt_pin: GPIO36
-  
+  setup_priority: 900
 ##### Hardware ports #####
 
 # For BME280/BME680 and other retrofitted sensor
 i2c:
+  sda: GPIO21
+  scl: GPIO22
+  setup_priority: 1000
 
 # For OLED display
 #spi:
@@ -139,8 +143,8 @@ aqdisplay:
   network: esp_wifi
 
 airpurifier:
-- platform: myfan
-  id: fancyfan
+- platform: ventimate
+  id: fancy_fan
   power_enable_pin: GPIO33
   power_pwm_pin: GPIO2
   fan_pwm_pin: GPIO32
@@ -160,15 +164,15 @@ airpurifier:
     on_turn_on:
       then:
         - lambda: |-
-            id(fancyfan).set_manual(true);
+            id(fancy_fan).set_manual(true);
     on_turn_off:
       then:
         - lambda: |-
-            id(fancyfan).set_manual(false);
+            id(fancy_fan).set_manual(false);
   max_pwm:
     name: "Max power"
     id: myfanSlider
-    min_value: 1
+    min_value: 0
     max_value: 100
     step: 1
     initial_value: 35
@@ -176,7 +180,7 @@ airpurifier:
     on_value:
       then:
         - lambda: |-
-            id(fancyfan).set_max_power(x); 
+            id(fancy_fan).set_max_power(x); 
                
 switch:
   - platform: gpio
@@ -392,11 +396,11 @@ interval:
       - switch.turn_on: pms_set
       - delay: 20s
       - switch.turn_off: pms_set
-  - interval: 1000ms
-    then:
-      - output.turn_on: statusLED
-      - delay: 500ms
-      - output.turn_off: statusLED
+  # - interval: 1000ms
+  #   then:
+  #     - output.turn_on: statusLED
+  #     - delay: 500ms
+  #     - output.turn_off: statusLED
 
     
     

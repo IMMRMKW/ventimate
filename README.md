@@ -41,7 +41,7 @@ This method requires you to have installed [Python](https://www.python.org/downl
 - In this folder, open a terminal.
 - Type `git clone git@github.com:IMMRMKW/ventimate.git`
 - Still using the terminal, navigate to the folder containing the cloned project.
-- In this folder, create a virtual environment by using `python -m venv`.
+- In this folder, create a virtual environment by using `python -m venv .venv`.
 - Start the virtual environment using `.\.venv\Scripts\activate`
 - Install ESPHome using `pip install esphome`
 - Connect the HA Mate to your laptop/computer using a USB cable.
@@ -49,4 +49,4 @@ This method requires you to have installed [Python](https://www.python.org/downl
 - In the *ventimate* folder, create a file called *secrets.yml*. Copy-paste the contents of *secrets_example.yml* to the new file. Replace the wifi_ssid and wifi_password strings with the credentials that apply for your wifi. You can generate a Home Assistant Api key [here](https://esphome.io/components/api.html) (the site randomly generates a key upon accessing or refreshing the site). The access point credentials you can decide upon yourself.
 - In your terminal, type `esphome run config_ESP32_S3.yml --device COM<number>`. Replace <number> with the number that is assigned to the COM port of your HA Mate. Press Enter.
 
-The configuration should now be compiled an be uploaded to your HA Mate.
+The configuration should now be compiled and uploaded to your HA Mate.
