@@ -10,17 +10,15 @@ namespace ventimate {
         power_en_pin_->pin_mode(gpio::FLAG_OUTPUT);
         power_en_pin_->digital_write(true);
         power_pwm_pin_->pin_mode(gpio::FLAG_OUTPUT);
-
+        
         if (fan_pwm_flag_) {
             fan_pwm_pin_->pin_mode(gpio::FLAG_OUTPUT);
-            ledcSetup(fan_pwm_channel_, fan_pwm_frequency_, resolution_);
-            ledcAttachPin(fan_pwm_pin_->get_pin(), fan_pwm_channel_);
+            ledcAttach(fan_pwm_pin_->get_pin(), fan_pwm_frequency_, resolution_);
             ledcWrite(fan_pwm_channel_, 0);
 
             power_pwm_pin_->digital_write(true);
         } else {
-            ledcSetup(power_pwm_channel_, power_pwm_frequency, resolution_);
-            ledcAttachPin(power_pwm_pin_->get_pin(), power_pwm_channel_);
+            ledcAttach(power_pwm_pin_->get_pin(), power_pwm_frequency_, resolution_);
             ledcWrite(power_pwm_channel_, 0);
         }
     }
