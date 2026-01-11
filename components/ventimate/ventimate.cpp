@@ -14,12 +14,12 @@ namespace ventimate {
         if (fan_pwm_flag_) {
             fan_pwm_pin_->pin_mode(gpio::FLAG_OUTPUT);
             ledcAttach(fan_pwm_pin_->get_pin(), fan_pwm_frequency_, resolution_);
-            ledcWrite(fan_pwm_channel_, 0);
+            ledcWrite(fan_pwm_pin_->get_pin(), 0);
 
             power_pwm_pin_->digital_write(true);
         } else {
             ledcAttach(power_pwm_pin_->get_pin(), power_pwm_frequency_, resolution_);
-            ledcWrite(power_pwm_channel_, 0);
+            ledcWrite(power_pwm_pin_->get_pin(), 0);
         }
     }
 
@@ -31,21 +31,21 @@ namespace ventimate {
         case true:
 
             if (power == 0) {
-                ledcWrite(fan_pwm_channel_, 0);
+                ledcWrite(fan_pwm_pin_->get_pin(), 0);
             } else {
                 float min_voltage = min_duty_cycle_ * max_output_voltage_;
                 uint32_t setpoint
                     = (voltage_setpoint(min_voltage, max_voltage_, power) / max_output_voltage_) * (pow(2, resolution_) - 1);
-                ledcWrite(fan_pwm_channel_, setpoint);
+                ledcWrite(fan_pwm_pin_->get_pin(), setpoint);
             }
             break;
         case false:
             if (power == 0) {
-                ledcWrite(power_pwm_channel_, 0);
+                ledcWrite(power_pwm_pin_->get_pin(), 0);
             } else {
                 uint32_t setpoint
                     = (voltage_setpoint(min_voltage_, max_voltage_, power) / max_output_voltage_) * (pow(2, resolution_) - 1);
-                ledcWrite(power_pwm_channel_, setpoint);
+                ledcWrite(power_pwm_pin_->get_pin(), setpoint);
             }
             break;
         }
